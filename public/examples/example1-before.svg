@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="440" viewBox="0 0 300 440">
+  <rect x="0" y="0" width="12" height="440" fill="#E5E7EB"/>
+  <rect x="12" y="0" width="288" height="440" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+  <!-- 4 title lines: 30px from top, 10px spacing -->
+  <rect x="56" y="30" width="200" height="3" fill="#9CA3AF"/>
+  <rect x="66" y="43" width="180" height="3" fill="#9CA3AF"/>
+  <rect x="76" y="56" width="160" height="3" fill="#9CA3AF"/>
+  <rect x="96" y="69" width="120" height="3" fill="#9CA3AF"/>
+  <!-- mountain + sun icon: 120×80, 20px below last line -->
+  <g transform="translate(96, 92)">
+    <circle cx="90" cy="20" r="12" fill="#D1D5DB"/>
+    <path d="M0 80 L40 30 L65 55 L85 35 L120 80 Z" fill="#D1D5DB"/>
+  </g>
+  <!-- author lines: 20px below icon -->
+  <rect x="106" y="192" width="100" height="2" fill="#D1D5DB"/>
+  <rect x="116" y="204" width="80" height="2" fill="#D1D5DB"/>
+</svg>

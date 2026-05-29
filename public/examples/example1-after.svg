@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="440" viewBox="0 0 300 440">
+  <defs>
+    <linearGradient id="coverBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="50%" stop-color="#1E3A5F"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D4A853"/>
+      <stop offset="50%" stop-color="#F5D78E"/>
+      <stop offset="100%" stop-color="#D4A853"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- 书脊 -->
+  <rect x="0" y="0" width="14" height="440" fill="#0A0E1A"/>
+  <rect x="14" y="0" width="1" height="440" fill="#D4A853" opacity="0.4"/>
+
+  <!-- 封面底色 -->
+  <rect x="15" y="0" width="285" height="440" fill="url(#coverBg)"/>
+
+  <!-- 装饰：顶部金色双线 -->
+  <rect x="50" y="40" width="210" height="1" fill="url(#goldGrad)" opacity="0.6"/>
+  <rect x="70" y="46" width="170" height="1" fill="url(#goldGrad)" opacity="0.35"/>
+
+  <!-- 装饰：菱形图案 -->
+  <polygon points="157,60 165,72 157,84 149,72" fill="none" stroke="#D4A853" stroke-width="1" opacity="0.5"/>
+  <polygon points="157,64 162,72 157,80 152,72" fill="#D4A853" opacity="0.15"/>
+
+  <!-- 顶部小字 -->
+  <text x="157" y="110" text-anchor="middle" fill="#D4A853" font-family="Georgia, serif" font-size="10" letter-spacing="4" opacity="0.8">A NOVEL</text>
+
+  <!-- 装饰线 -->
+  <rect x="90" y="120" width="134" height="1" fill="url(#goldGrad)" opacity="0.3"/>
+
+  <!-- 主标题 -->
+  <text x="157" y="185" text-anchor="middle" fill="#FFFFFF" font-family="Georgia, serif" font-size="40" font-weight="bold" letter-spacing="2">The</text>
+  <text x="157" y="235" text-anchor="middle" fill="#FFFFFF" font-family="Georgia, serif" font-size="40" font-weight="bold" letter-spacing="2">Midnight</text>
+  <text x="157" y="285" text-anchor="middle" fill="#FFFFFF" font-family="Georgia, serif" font-size="40" font-weight="bold" letter-spacing="2">Garden</text>
+
+  <!-- 金色装饰线（标题下方） -->
+  <rect x="80" y="305" width="154" height="2" fill="url(#goldGrad)"/>
+  <circle cx="80" cy="306" r="2" fill="#D4A853"/>
+  <circle cx="234" cy="306" r="2" fill="#D4A853"/>
+
+  <!-- 作者名 -->
+  <text x="157" y="340" text-anchor="middle" fill="#C9B88C" font-family="Georgia, serif" font-size="14" letter-spacing="3">ELENA RIVERS</text>
+
+  <!-- 底部装饰线 -->
+  <rect x="50" y="395" width="210" height="1" fill="url(#goldGrad)" opacity="0.35"/>
+  <rect x="70" y="401" width="170" height="1" fill="url(#goldGrad)" opacity="0.6"/>
+
+  <!-- 底部推荐语 -->
+  <text x="157" y="422" text-anchor="middle" fill="#8899AA" font-family="Georgia, serif" font-size="8" font-style="italic" letter-spacing="1">"Breathtaking" — The New York Times</text>
+</svg>
