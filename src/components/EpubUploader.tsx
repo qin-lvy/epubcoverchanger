@@ -69,6 +69,7 @@ export default function EpubUploader({
           ref={inputRef}
           type="file"
           accept=".epub"
+          multiple={false}
           className="hidden"
           onChange={(e) => {
             const file = e.target.files?.[0];
@@ -89,6 +90,9 @@ export default function EpubUploader({
           {isLoading ? "Processing..." : "Upload EPUB"}
         </button>
         <p className="mt-3 text-sm text-gray-400">or drop a file</p>
+        <p className="mt-2 text-xs text-gray-400">
+          Single EPUB only · Max 100MB · Processed locally in your browser
+        </p>
       </div>
 
       <p className="mt-4 text-xs leading-relaxed text-gray-400">

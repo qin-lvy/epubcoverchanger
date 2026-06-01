@@ -38,6 +38,8 @@ import Toast from "./Toast";
 
 type ToolState = "initial" | "cover-select" | "preview";
 
+const MAX_EPUB_FILE_SIZE = 100 * 1024 * 1024;
+
 const PLACEHOLDER_BEFORE =
   "data:image/svg+xml," +
   encodeURIComponent(
@@ -195,6 +197,10 @@ export default function CoverReplacer() {
     async (file: File) => {
       if (!isValidEpub(file)) {
         showToast("Please upload a valid .epub file");
+        return;
+      }
+      if (file.size > MAX_EPUB_FILE_SIZE) {
+        showToast("This EPUB is too large. Please use a file under 100MB.");
         return;
       }
 
