@@ -45,14 +45,7 @@ type FeedbackType = (typeof feedbackOptions)[number]["value"];
 type SubmitState = "idle" | "submitting" | "success" | "error";
 
 export default function FeedbackSection() {
-  const [type, setType] = useState<FeedbackType>(() => {
-    if (typeof window === "undefined") {
-      return "bug";
-    }
-
-    const params = new URLSearchParams(window.location.search);
-    return params.get("feedback") === "pro" ? "pro" : "bug";
-  });
+  const [type, setType] = useState<FeedbackType>("bug");
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
   const [website, setWebsite] = useState("");
@@ -60,7 +53,16 @@ export default function FeedbackSection() {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
+    const timer = window.setTimeout(() => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("feedback") === "pro") {
+        setType("pro");
+      }
+    }, 0);
+
     captureEvent("feedback_viewed");
+
+    return () => window.clearTimeout(timer);
   }, []);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
