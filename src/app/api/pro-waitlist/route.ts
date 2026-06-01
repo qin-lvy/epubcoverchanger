@@ -10,7 +10,8 @@ function getSupabaseConfig() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const message = typeof body.message === "string" ? body.message.trim() : "";
+    const message =
+      typeof body.message === "string" ? body.message.trim().slice(0, 5000) : "";
     const email = typeof body.email === "string" ? body.email.trim() : "";
     const pageUrl = typeof body.pageUrl === "string" ? body.pageUrl.slice(0, 500) : "";
     const website = typeof body.website === "string" ? body.website.trim() : "";
@@ -22,13 +23,6 @@ export async function POST(request: Request) {
     if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
       return NextResponse.json(
         { error: "Please enter a valid email address to join Pro early access." },
-        { status: 400 },
-      );
-    }
-
-    if (message.length < 10 || message.length > 2000) {
-      return NextResponse.json(
-        { error: "Please tell us what Pro workflow you want, between 10 and 2000 characters." },
         { status: 400 },
       );
     }
@@ -51,7 +45,7 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         email,
-        message,
+        message: message || null,
         page_url: pageUrl || null,
         user_agent: request.headers.get("user-agent")?.slice(0, 500) ?? null,
         status: "new",

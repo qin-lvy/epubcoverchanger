@@ -43,6 +43,7 @@ const feedbackOptions = [
 
 type FeedbackType = (typeof feedbackOptions)[number]["value"];
 type SubmitState = "idle" | "submitting" | "success" | "error";
+const emailPattern = /^\S+@\S+\.\S+$/;
 
 export default function FeedbackSection() {
   const [type, setType] = useState<FeedbackType>("bug");
@@ -67,18 +68,45 @@ export default function FeedbackSection() {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const isProInterest = type === "pro";
+    const trimmedMessage = message.trim();
+    const trimmedEmail = email.trim();
+
+    if (isProInterest) {
+      if (!trimmedEmail || !emailPattern.test(trimmedEmail)) {
+        setSubmitState("error");
+        setErrorMessage(
+          "Please enter a valid email address to join Pro early access.",
+        );
+        return;
+      }
+    } else {
+      if (!trimmedMessage) {
+        setSubmitState("error");
+        setErrorMessage(
+          "Please tell us what happened or what you would like improved.",
+        );
+        return;
+      }
+
+      if (trimmedEmail && !emailPattern.test(trimmedEmail)) {
+        setSubmitState("error");
+        setErrorMessage("Please enter a valid email address or leave it blank.");
+        return;
+      }
+    }
+
     setSubmitState("submitting");
     setErrorMessage("");
     captureEvent("feedback_submit_clicked", { feedback_type: type });
 
-    const isProInterest = type === "pro";
     const response = await fetch(isProInterest ? "/api/pro-waitlist" : "/api/feedback", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         type,
-        message,
-        email,
+        message: trimmedMessage,
+        email: trimmedEmail,
         website,
         pageUrl: window.location.href,
       }),
@@ -116,7 +144,7 @@ export default function FeedbackSection() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-10">
+        <form onSubmit={handleSubmit} noValidate className="mt-10">
           <div className="grid gap-4 md:grid-cols-4">
             {feedbackOptions.map((option) => {
               const Icon = option.icon;
@@ -126,7 +154,11 @@ export default function FeedbackSection() {
                 <button
                   key={option.value}
                   type="button"
-                  onClick={() => setType(option.value)}
+                  onClick={() => {
+                    setType(option.value);
+                    setSubmitState("idle");
+                    setErrorMessage("");
+                  }}
                   className={`group rounded-2xl border bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md ${
                     selected ? "border-primary ring-2 ring-primary/15" : "border-white"
                   }`}
@@ -155,12 +187,9 @@ export default function FeedbackSection() {
           <div className="mt-8 grid gap-5 rounded-2xl bg-white p-5 shadow-sm">
             <label className="grid gap-2">
               <span className="text-sm font-semibold text-gray-700">
-                Tell us more
+                Tell us more {type === "pro" ? "(optional)" : ""}
               </span>
               <textarea
-                required
-                minLength={10}
-                maxLength={2000}
                 value={message}
                 onChange={(event) => setMessage(event.target.value)}
                 placeholder={
@@ -178,7 +207,6 @@ export default function FeedbackSection() {
               </span>
               <input
                 type="email"
-                required={type === "pro"}
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder={
