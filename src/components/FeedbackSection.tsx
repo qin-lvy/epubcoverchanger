@@ -1,6 +1,12 @@
 ﻿"use client";
 
-import { Bug, Lightbulb, Loader2, MessageSquareHeart } from "lucide-react";
+import {
+  Bug,
+  Crown,
+  Lightbulb,
+  Loader2,
+  MessageSquareHeart,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { captureEvent } from "@/lib/analytics";
 
@@ -26,6 +32,13 @@ const feedbackOptions = [
       "Good or bad, your notes help decide what gets improved next.",
     icon: MessageSquareHeart,
   },
+  {
+    value: "pro",
+    title: "Join Pro early access",
+    description:
+      "Get notified about publish-ready checks, batch workflows, and early offers.",
+    icon: Crown,
+  },
 ] as const;
 
 type FeedbackType = (typeof feedbackOptions)[number]["value"];
@@ -49,7 +62,8 @@ export default function FeedbackSection() {
     setErrorMessage("");
     captureEvent("feedback_submit_clicked", { feedback_type: type });
 
-    const response = await fetch("/api/feedback", {
+    const isProInterest = type === "pro";
+    const response = await fetch(isProInterest ? "/api/pro-waitlist" : "/api/feedback", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -94,7 +108,7 @@ export default function FeedbackSection() {
         </div>
 
         <form onSubmit={handleSubmit} className="mt-10">
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-4">
             {feedbackOptions.map((option) => {
               const Icon = option.icon;
               const selected = type === option.value;
@@ -140,20 +154,29 @@ export default function FeedbackSection() {
                 maxLength={2000}
                 value={message}
                 onChange={(event) => setMessage(event.target.value)}
-                placeholder="What happened? What would you like improved?"
+                placeholder={
+                  type === "pro"
+                    ? "What Pro workflow would save you the most time? Batch changes, platform checks, saved presets, or something else?"
+                    : "What happened? What would you like improved?"
+                }
                 className="min-h-32 rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/15"
               />
             </label>
 
             <label className="grid gap-2">
               <span className="text-sm font-semibold text-gray-700">
-                Email (optional)
+                Email {type === "pro" ? "(required for Pro early access)" : "(optional)"}
               </span>
               <input
                 type="email"
+                required={type === "pro"}
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                placeholder="Only if you want a reply"
+                placeholder={
+                  type === "pro"
+                    ? "So we can invite you when Pro opens"
+                    : "Only if you want a reply"
+                }
                 className="rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/15"
               />
             </label>
@@ -170,7 +193,9 @@ export default function FeedbackSection() {
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-sm text-gray-500">
-                Your EPUB and cover images are not sent with feedback.
+                {type === "pro"
+                  ? "Pro interest is stored separately from general feedback."
+                  : "Your EPUB and cover images are not sent with feedback."}
               </p>
               <button
                 type="submit"
@@ -180,13 +205,15 @@ export default function FeedbackSection() {
                 {submitState === "submitting" && (
                   <Loader2 className="h-4 w-4 animate-spin" />
                 )}
-                Submit feedback
+                {type === "pro" ? "Join Pro early access" : "Submit feedback"}
               </button>
             </div>
 
             {submitState === "success" && (
               <p className="rounded-xl bg-green-50 px-4 py-3 text-sm font-medium text-green-700">
-                Thanks. Your feedback was received and will help shape the next version.
+                {type === "pro"
+                  ? "Thanks. You are on the Pro early access list."
+                  : "Thanks. Your feedback was received and will help shape the next version."}
               </p>
             )}
 

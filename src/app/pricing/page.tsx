@@ -28,14 +28,14 @@ const plans = [
   {
     name: "Pro",
     price: "Coming soon",
-    note: "For creators and publishers with repeat cover workflows.",
+    note: "For authors and publishers who need publish-ready EPUB covers.",
     features: [
+      "Cover health check before publishing",
+      "Kindle and Kobo display risk checks",
+      "KDP, Apple Books, Kobo, and Google Play compliance report",
       "Batch EPUB cover replacement",
       "Multi-platform export bundles",
-      "Saved presets and preferred settings",
-      "Larger workflow limits",
-      "Smart crop and background options",
-      "Priority support",
+      "Saved presets for repeat workflows",
     ],
     cta: "Join Pro waitlist",
     href: "/#feedback",
@@ -51,7 +51,7 @@ export default function PricingPage() {
           Pricing
         </p>
         <h1 className="mt-4 text-4xl font-bold tracking-tight text-gray-950 md:text-5xl">
-          Free for single EPUB covers. Pro will be for heavier workflows.
+          Free changes one cover. Pro helps avoid publishing surprises.
         </h1>
         <p className="mt-5 text-lg leading-8 text-gray-600">
           The core cover changer stays generous: no watermark, no forced account,
@@ -97,12 +97,13 @@ export default function PricingPage() {
 
       <div className="mt-10 rounded-3xl border border-gray-200 bg-white p-8 shadow-sm">
         <h2 className="text-2xl font-semibold text-gray-950">
-          Why no forced login today?
+          Why Pro is not just more uses
         </h2>
         <p className="mt-4 leading-7 text-gray-600">
-          For the current free tool, an account would mostly add friction. Login
-          will make sense when it gives you something useful: saved presets,
-          Pro early access, optional history, and faster repeat workflows.
+          The free tool should already do the basic job well. Pro is planned for
+          the harder moments: checking whether a cover is truly embedded,
+          spotting Kindle or Kobo display risks, preparing platform-specific
+          outputs, and saving time when you manage many books.
         </p>
       </div>
     </section>

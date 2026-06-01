@@ -32,7 +32,12 @@
   {
     question: "What will Pro include?",
     answer:
-      "Pro will not sell basic quality, normal downloads, or watermark removal. Those are part of the free core experience. Pro is planned for efficiency features such as batch EPUB cover replacement, multi-platform export bundles, saved presets, larger workflow limits, smart crop/background options, and priority support.",
+      "Pro will not sell basic quality, normal downloads, or watermark removal. Those are part of the free core experience. Pro is planned for publish-ready workflows: cover health checks, Kindle and Kobo display risk checks, platform compliance reports, batch EPUB cover replacement, multi-platform export bundles, and saved presets.",
+  },
+  {
+    question: "Why would I join the Pro early access list?",
+    answer:
+      "Join if you publish or manage EPUB files often and want to be notified when Pro workflows open. We ask for an email only for Pro early access so we can invite you later, ask what workflow matters most, and offer early-user discounts.",
   },
 ];
 
