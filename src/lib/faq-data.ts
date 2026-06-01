@@ -22,7 +22,17 @@
   {
     question: "Is it really free?",
     answer:
-      "Yes. Epub Cover Changer is currently free for single EPUB cover changes. Future Pro features may include batch processing, saved presets, multi-platform exports, and higher workflow limits.",
+      "Yes. Epub Cover Changer is currently free for single EPUB cover changes. You can process one EPUB at a time, up to 100MB, with no watermark and no required account. Future Pro features will focus on batch processing, saved presets, multi-platform exports, and higher workflow limits.",
+  },
+  {
+    question: "Do I need an account?",
+    answer:
+      "No account is required for the current free tool. Login will only make sense when it gives you real value, such as saved presets, Pro early access, optional history, and faster repeat workflows.",
+  },
+  {
+    question: "What will Pro include?",
+    answer:
+      "Pro will not sell basic quality, normal downloads, or watermark removal. Those are part of the free core experience. Pro is planned for efficiency features such as batch EPUB cover replacement, multi-platform export bundles, saved presets, larger workflow limits, smart crop/background options, and priority support.",
   },
 ];
 

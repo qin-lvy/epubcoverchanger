@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Pricing | Epub Cover Changer",
   description:
-    "Single EPUB cover changes are free. Future Pro features will focus on batch workflows, saved presets, and multi-platform exports.",
+    "Single EPUB cover changes are free up to 100MB. Future Pro features will focus on batch workflows, saved presets, and multi-platform exports.",
   alternates: { canonical: "https://epubcoverchanger.com/pricing" },
 };
 
@@ -12,12 +12,14 @@ const plans = [
   {
     name: "Free",
     price: "$0",
-    note: "For single-book cover changes today.",
+    note: "For private, single-book cover changes today.",
     features: [
       "Change one EPUB cover at a time",
-      "Browser-based file processing",
+      "EPUB files up to 100MB",
+      "Private browser-based processing",
       "Platform-ready cover presets",
-      "Fit, fill, and original image modes",
+      "Fit and Fill positioning",
+      "No watermark or quality downgrade",
     ],
     cta: "Use the free tool",
     href: "/",
@@ -26,15 +28,17 @@ const plans = [
   {
     name: "Pro",
     price: "Coming soon",
-    note: "For creators who need faster multi-book workflows.",
+    note: "For creators and publishers with repeat cover workflows.",
     features: [
       "Batch EPUB cover replacement",
-      "Saved presets",
       "Multi-platform export bundles",
-      "Higher workflow limits and priority support",
+      "Saved presets and preferred settings",
+      "Larger workflow limits",
+      "Smart crop and background options",
+      "Priority support",
     ],
-    cta: "Not available yet",
-    href: "/",
+    cta: "Join Pro waitlist",
+    href: "/#feedback",
     highlighted: false,
   },
 ];
@@ -47,10 +51,12 @@ export default function PricingPage() {
           Pricing
         </p>
         <h1 className="mt-4 text-4xl font-bold tracking-tight text-gray-950 md:text-5xl">
-          Start free. Upgrade only when heavier workflows arrive.
+          Free for single EPUB covers. Pro will be for heavier workflows.
         </h1>
         <p className="mt-5 text-lg leading-8 text-gray-600">
-          Single EPUB cover replacement is free today. Paid features will focus on heavier workflows like batch processing, saved presets, and multi-platform exports.
+          The core cover changer stays generous: no watermark, no forced account,
+          and no quality downgrade. Paid features should earn their place by
+          saving time for people who manage many books.
         </p>
       </div>
 
@@ -87,6 +93,17 @@ export default function PricingPage() {
             </Link>
           </div>
         ))}
+      </div>
+
+      <div className="mt-10 rounded-3xl border border-gray-200 bg-white p-8 shadow-sm">
+        <h2 className="text-2xl font-semibold text-gray-950">
+          Why no forced login today?
+        </h2>
+        <p className="mt-4 leading-7 text-gray-600">
+          For the current free tool, an account would mostly add friction. Login
+          will make sense when it gives you something useful: saved presets,
+          Pro early access, optional history, and faster repeat workflows.
+        </p>
       </div>
     </section>
   );
