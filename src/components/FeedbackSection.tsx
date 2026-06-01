@@ -45,7 +45,14 @@ type FeedbackType = (typeof feedbackOptions)[number]["value"];
 type SubmitState = "idle" | "submitting" | "success" | "error";
 
 export default function FeedbackSection() {
-  const [type, setType] = useState<FeedbackType>("bug");
+  const [type, setType] = useState<FeedbackType>(() => {
+    if (typeof window === "undefined") {
+      return "bug";
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    return params.get("feedback") === "pro" ? "pro" : "bug";
+  });
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
   const [website, setWebsite] = useState("");

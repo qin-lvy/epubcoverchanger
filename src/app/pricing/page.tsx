@@ -38,7 +38,7 @@ const plans = [
       "Saved presets for repeat workflows",
     ],
     cta: "Join Pro waitlist",
-    href: "/#feedback",
+    href: "/?feedback=pro#feedback",
     highlighted: false,
   },
 ];
