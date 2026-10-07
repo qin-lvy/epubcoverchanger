@@ -1,5 +1,4 @@
 import JSZip from "jszip";
-import { saveAs } from "file-saver";
 
 export interface ExtractResult {
   coverBlob: Blob | null;
@@ -9,8 +8,9 @@ export interface ExtractResult {
   fileSize: number;
 }
 
-export interface ReplaceResult {
+export interface GenerateEpubResult {
   success: boolean;
+  file?: File;
   error?: string;
 }
 
@@ -152,12 +152,12 @@ function findItemHrefById(opfContent: string, itemId: string): string | null {
   return null;
 }
 
-export async function replaceCoverAndDownload(
+export async function generateUpdatedEpub(
   zip: JSZip,
   coverPath: string,
   newCoverFile: File,
   originalFileName: string,
-): Promise<ReplaceResult> {
+): Promise<GenerateEpubResult> {
   try {
     const newCoverData = await newCoverFile.arrayBuffer();
     zip.file(coverPath, newCoverData);
@@ -171,15 +171,22 @@ export async function replaceCoverAndDownload(
 
     const baseName = originalFileName.replace(/\.epub$/i, "");
     const newFileName = `${baseName}-new-cover.epub`;
-    saveAs(newEpubBlob, newFileName);
+    const file = new File([newEpubBlob], newFileName, {
+      type: "application/epub+zip",
+    });
 
-    return { success: true };
+    return { success: true, file };
   } catch (error) {
     return {
       success: false,
       error: error instanceof Error ? error.message : "Unknown error occurred",
     };
   }
+}
+
+export async function saveGeneratedEpub(file: File): Promise<void> {
+  const fileSaver = await import("file-saver");
+  fileSaver.saveAs(file, file.name);
 }
 
 export function checkDRM(zip: JSZip): boolean {

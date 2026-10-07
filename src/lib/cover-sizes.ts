@@ -44,6 +44,43 @@ export interface ExportCoverOptions {
 }
 
 export const COVER_EDITOR_DISPLAY_WIDTH = 360;
+const MOBILE_VIEWPORT_BREAKPOINT = 768;
+const MOBILE_PREVIEW_VIEWPORT_RATIO = 0.45;
+
+export function getCoverEditorDisplayDimensions(
+  viewportWidth: number,
+  viewportHeight: number,
+  targetWidth: number,
+  targetHeight: number,
+): ImageDimensions {
+  const targetRatio = targetHeight / targetWidth;
+  const widthLimit = Math.min(COVER_EDITOR_DISPLAY_WIDTH, viewportWidth - 48);
+  const heightLimitedWidth =
+    Math.min(viewportWidth, viewportHeight) < MOBILE_VIEWPORT_BREAKPOINT
+      ? Math.round((viewportHeight * MOBILE_PREVIEW_VIEWPORT_RATIO) / targetRatio)
+      : widthLimit;
+  const width = Math.max(1, Math.min(widthLimit, heightLimitedWidth));
+
+  return {
+    width,
+    height: Math.round(width * targetRatio),
+  };
+}
+
+export function mapDisplayTransformToOutput(
+  transform: CoverTransform,
+  imageDimensions: ImageDimensions,
+  displayWidth: number,
+  targetWidth: number,
+) {
+  const outputScale = targetWidth / displayWidth;
+  return {
+    x: transform.x * outputScale,
+    y: transform.y * outputScale,
+    width: imageDimensions.width * transform.scale * outputScale,
+    height: imageDimensions.height * transform.scale * outputScale,
+  };
+}
 
 /** MVP platform presets. Labels distinguish official fixed sizes from safe recommendations. */
 export const COVER_SIZES: CoverSize[] = [
@@ -247,16 +284,23 @@ export async function exportPositionedCover({
   ctx.fillStyle = BACKGROUND_COLORS[transform.background];
   ctx.fillRect(0, 0, targetWidth, targetHeight);
 
-  const outputScale = targetWidth / displayWidth;
-  const outputX = transform.x * outputScale;
-  const outputY = transform.y * outputScale;
-  const outputWidth = imageDimensions.width * transform.scale * outputScale;
-  const outputHeight = imageDimensions.height * transform.scale * outputScale;
+  const outputTransform = mapDisplayTransformToOutput(
+    transform,
+    imageDimensions,
+    displayWidth,
+    targetWidth,
+  );
 
   const img = await loadImage(file);
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = "high";
-  ctx.drawImage(img, outputX, outputY, outputWidth, outputHeight);
+  ctx.drawImage(
+    img,
+    outputTransform.x,
+    outputTransform.y,
+    outputTransform.width,
+    outputTransform.height,
+  );
 
   const finalMime = mimeType || file.type || "image/jpeg";
   const blob = await new Promise<Blob | null>((resolve) =>

@@ -8,6 +8,7 @@ import {
   centerTransform,
   exportPositionedCover,
   formatDimensions,
+  getCoverEditorDisplayDimensions,
   getInitialFitMode,
   getModeScale,
   type CoverBackground,
@@ -45,14 +46,6 @@ const MODE_COPY: Record<EditorFitMode, { label: string; helper: string }> = {
     helper: "Fills the cover edge to edge; some image edges may be cropped.",
   },
 };
-
-function getDisplayDimensions(targetWidth: number, targetHeight: number) {
-  const width = Math.min(COVER_EDITOR_DISPLAY_WIDTH, window.innerWidth - 48);
-  return {
-    width,
-    height: Math.round(width * (targetHeight / targetWidth)),
-  };
-}
 
 function constrainTransform(
   transform: CoverTransform,
@@ -99,14 +92,21 @@ export default function CoverCropEditor({
     width:
       typeof window === "undefined"
         ? COVER_EDITOR_DISPLAY_WIDTH
-        : Math.min(COVER_EDITOR_DISPLAY_WIDTH, window.innerWidth - 48),
+        : getCoverEditorDisplayDimensions(
+            window.innerWidth,
+            window.innerHeight,
+            targetWidth,
+            targetHeight,
+          ).width,
     height:
       typeof window === "undefined"
         ? Math.round(COVER_EDITOR_DISPLAY_WIDTH * (targetHeight / targetWidth))
-        : Math.round(
-            Math.min(COVER_EDITOR_DISPLAY_WIDTH, window.innerWidth - 48) *
-              (targetHeight / targetWidth),
-          ),
+        : getCoverEditorDisplayDimensions(
+            window.innerWidth,
+            window.innerHeight,
+            targetWidth,
+            targetHeight,
+          ).height,
   });
 
   const initialMode = useMemo(
@@ -120,7 +120,14 @@ export default function CoverCropEditor({
 
   useEffect(() => {
     const updateDisplay = () =>
-      setDisplayDimensions(getDisplayDimensions(targetWidth, targetHeight));
+      setDisplayDimensions(
+        getCoverEditorDisplayDimensions(
+          window.innerWidth,
+          window.innerHeight,
+          targetWidth,
+          targetHeight,
+        ),
+      );
     window.addEventListener("resize", updateDisplay);
     return () => {
       window.removeEventListener("resize", updateDisplay);
@@ -129,7 +136,14 @@ export default function CoverCropEditor({
 
   useEffect(() => {
     const updateDisplay = () =>
-      setDisplayDimensions(getDisplayDimensions(targetWidth, targetHeight));
+      setDisplayDimensions(
+        getCoverEditorDisplayDimensions(
+          window.innerWidth,
+          window.innerHeight,
+          targetWidth,
+          targetHeight,
+        ),
+      );
     window.addEventListener("orientationchange", updateDisplay);
     return () => window.removeEventListener("orientationchange", updateDisplay);
   }, [targetHeight, targetWidth]);

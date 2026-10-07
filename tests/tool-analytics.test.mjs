@@ -6,6 +6,7 @@ import {
   TOOL_FAILURE_REASONS,
   TOOL_FAILURE_STAGES,
   TOOL_FUNNEL_EVENTS,
+  TOOL_SAVE_EVENT,
   sanitizeToolProperties,
 } from "../src/lib/tool-analytics.ts";
 
@@ -16,8 +17,13 @@ test("defines the six approved funnel events in order", () => {
     "tool_cover_selected",
     "tool_cover_prepared",
     "tool_download_clicked",
-    "tool_download_succeeded",
+    "tool_epub_generated",
   ]);
+});
+
+test("keeps save intent outside the core funnel", () => {
+  assert.equal(TOOL_SAVE_EVENT, "tool_save_clicked");
+  assert.equal(TOOL_FUNNEL_EVENTS.includes(TOOL_SAVE_EVENT), false);
 });
 
 test("uses one separate event for categorized failures", () => {

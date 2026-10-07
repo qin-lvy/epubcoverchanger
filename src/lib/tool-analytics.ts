@@ -4,8 +4,10 @@ export const TOOL_FUNNEL_EVENTS = [
   "tool_cover_selected",
   "tool_cover_prepared",
   "tool_download_clicked",
-  "tool_download_succeeded",
+  "tool_epub_generated",
 ] as const;
+
+export const TOOL_SAVE_EVENT = "tool_save_clicked";
 
 export const TOOL_FAILURE_EVENT = "tool_failed";
 
@@ -16,7 +18,10 @@ export const TOOL_ALLOWED_PROPERTY_KEYS = ["workflow_id", "stage", "reason", "ha
 type ToolFunnelEvent = (typeof TOOL_FUNNEL_EVENTS)[number];
 type ToolFailureStage = (typeof TOOL_FAILURE_STAGES)[number];
 type ToolFailureReason = (typeof TOOL_FAILURE_REASONS)[number];
-export type ToolEvent = ToolFunnelEvent | typeof TOOL_FAILURE_EVENT;
+export type ToolEvent =
+  | ToolFunnelEvent
+  | typeof TOOL_SAVE_EVENT
+  | typeof TOOL_FAILURE_EVENT;
 export type ToolEventProperties = {
   workflow_id: string;
   stage?: ToolFailureStage;
