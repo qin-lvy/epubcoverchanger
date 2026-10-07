@@ -111,7 +111,7 @@ export default function DownloadButton({
     }
 
     if (isIosDevice()) {
-      setSaveMessage("Your EPUB is ready. Tap Save EPUB to Files below.");
+      setSaveMessage("Your EPUB is ready. Tap Save or Open EPUB below.");
       return;
     }
 
@@ -140,7 +140,7 @@ export default function DownloadButton({
         title: generatedFile.name,
       });
       setSaveMessage(
-        "The system save options closed. Check Files if you chose Save to Files.",
+        "The system panel closed. Check Files or Apple Books, depending on what you chose.",
       );
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
@@ -184,7 +184,7 @@ export default function DownloadButton({
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-white hover:bg-primary-hover"
             >
               <Share2 className="h-4 w-4" />
-              Save EPUB to Files
+              Save or Open EPUB
             </button>
           )}
           <a
@@ -211,7 +211,7 @@ export default function DownloadButton({
         </div>
 
         <p className="mt-3 text-xs text-gray-600">
-          On iPhone, choose Save to Files in the system panel, then select a folder.
+          On iPhone, choose Save to Files or open it in Apple Books from the system panel.
         </p>
       </div>
     );

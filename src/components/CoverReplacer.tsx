@@ -577,7 +577,7 @@ export default function CoverReplacer() {
               <div className="w-full max-w-[480px] rounded-2xl bg-white p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_1px_2px_rgba(0,0,0,0.02)] max-lg:max-w-full max-lg:p-6">
                 <div className="mb-4">
                   <label className="mb-2 block text-xs font-semibold tracking-wide text-gray-500 uppercase">
-                    Target platform
+                    Output size
                   </label>
                   <select
                     value={selectedSize.id}

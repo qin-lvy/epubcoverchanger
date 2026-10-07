@@ -287,8 +287,11 @@ export default function CoverCropEditor({
       <div className="mb-4 text-center">
         <div className="flex items-center justify-center gap-2 text-sm font-medium text-gray-700">
           <Move className="h-4 w-4" />
-          <span>Position your cover image</span>
+          <span>Review your cover position</span>
         </div>
+        <p className="mt-1 text-xs text-gray-600">
+          Centered automatically. Adjust if needed.
+        </p>
         <p className="mt-1 text-xs text-gray-500">
           {targetLabel}: {targetWidth} x {targetHeight}px · Source:{" "}
           {formatDimensions(imageDimensions)}
