@@ -145,7 +145,7 @@ export default function DownloadButton({
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
       setSaveMessage(
-        "The system save panel was unavailable. Try Direct download below.",
+        "The system save panel was unavailable. Please try Save or Open EPUB again.",
       );
     }
   }, [captureSaveClick, generatedFile]);

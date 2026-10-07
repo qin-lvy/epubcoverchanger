@@ -24,6 +24,7 @@ test("describes the iPhone system panel as saving or opening the EPUB", () => {
 test("hides unreliable blob link fallbacks when iPhone sharing works", () => {
   assert.match(source, /const showLinkFallbacks = !isIosDevice/);
   assert.match(source, /showLinkFallbacks &&/);
+  assert.doesNotMatch(source, /Try Direct download below/);
 });
 
 test("explains that cover positioning is automatic but optional to adjust", () => {
