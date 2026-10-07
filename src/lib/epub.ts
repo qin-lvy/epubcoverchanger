@@ -152,6 +152,29 @@ function findItemHrefById(opfContent: string, itemId: string): string | null {
   return null;
 }
 
+async function updateEpubModifiedDate(zip: JSZip): Promise<void> {
+  const containerFile = zip.file("META-INF/container.xml");
+  if (!containerFile) return;
+
+  const containerXml = await containerFile.async("text");
+  const opfPath = containerXml.match(/full-path=["\x27]([^"\x27]+)["\x27]/)?.[1];
+  if (!opfPath) return;
+
+  const opfFile = zip.file(opfPath);
+  if (!opfFile) return;
+
+  const opfContent = await opfFile.async("text");
+  const modifiedPattern =
+    /(<meta\b[^>]*\bproperty\s*=\s*["\x27]dcterms:modified["\x27][^>]*>)[\s\S]*?(<\/meta>)/i;
+  if (!modifiedPattern.test(opfContent)) return;
+
+  const modifiedAt = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
+  zip.file(
+    opfPath,
+    opfContent.replace(modifiedPattern, `$1${modifiedAt}$2`),
+  );
+}
+
 export async function generateUpdatedEpub(
   zip: JSZip,
   coverPath: string,
@@ -161,6 +184,7 @@ export async function generateUpdatedEpub(
   try {
     const newCoverData = await newCoverFile.arrayBuffer();
     zip.file(coverPath, newCoverData);
+    await updateEpubModifiedDate(zip);
 
     const newEpubBlob = await zip.generateAsync({
       type: "blob",

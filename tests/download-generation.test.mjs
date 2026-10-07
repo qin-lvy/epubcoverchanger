@@ -7,6 +7,14 @@ import { generateUpdatedEpub } from "../src/lib/epub.ts";
 test("generates an updated EPUB without claiming that it was saved", async () => {
   const zip = new JSZip();
   zip.file("mimetype", "application/epub+zip");
+  zip.file(
+    "META-INF/container.xml",
+    `<container><rootfiles><rootfile full-path="OPS/content.opf" /></rootfiles></container>`,
+  );
+  zip.file(
+    "OPS/content.opf",
+    `<package unique-identifier="book-id"><metadata><dc:identifier id="book-id">urn:test:book</dc:identifier><meta property="dcterms:modified">2026-01-01T00:00:00Z</meta></metadata></package>`,
+  );
   zip.file("OPS/cover.jpg", new Uint8Array([1, 2, 3]));
 
   const replacement = new File(
@@ -32,4 +40,17 @@ test("generates an updated EPUB without claiming that it was saved", async () =>
     .async("uint8array");
 
   assert.deepEqual([...coverBytes], [9, 8, 7, 6]);
+
+  const packageDocument = await generatedZip
+    .file("OPS/content.opf")
+    .async("text");
+  assert.match(
+    packageDocument,
+    /<dc:identifier id="book-id">urn:test:book<\/dc:identifier>/,
+  );
+  assert.doesNotMatch(packageDocument, /2026-01-01T00:00:00Z/);
+  assert.match(
+    packageDocument,
+    /<meta property="dcterms:modified">\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z<\/meta>/,
+  );
 });
