@@ -1,6 +1,22 @@
-﻿type AnalyticsProperties = Record<string, string | number | boolean | null | undefined>;
+﻿import {
+  sanitizeToolProperties,
+  type ToolEvent,
+  type ToolEventProperties,
+} from "@/lib/tool-analytics";
+
+type AnalyticsProperties = Record<string, string | number | boolean | null | undefined>;
 
 const DISTINCT_ID_KEY = "ecc_distinct_id";
+
+export type DeviceCategory = "desktop" | "mobile" | "tablet";
+
+export function getDeviceCategory(userAgent: string, maxTouchPoints = 0): DeviceCategory {
+  if (/iPad|Tablet|PlayBook|Silk/i.test(userAgent)) return "tablet";
+  if (/Macintosh/i.test(userAgent) && maxTouchPoints > 1) return "tablet";
+  if (/Android/i.test(userAgent) && !/Mobile/i.test(userAgent)) return "tablet";
+  if (/Mobile|iPhone|iPod|Android/i.test(userAgent)) return "mobile";
+  return "desktop";
+}
 
 function getPostHogConfig() {
   return {
@@ -40,9 +56,9 @@ export function captureEvent(
     properties: {
       ...properties,
       app: "epubcoverchanger",
-      $current_url: window.location.href,
+      device_category: getDeviceCategory(window.navigator.userAgent, window.navigator.maxTouchPoints),
+      $current_url: window.location.pathname,
       $pathname: window.location.pathname,
-      current_url: window.location.href,
       path: window.location.pathname,
     },
   };
@@ -67,4 +83,11 @@ export function captureEvent(
 
 export function capturePageView(path: string) {
   captureEvent("$pageview", { path });
+}
+
+export function captureToolEvent(
+  event: ToolEvent,
+  properties: ToolEventProperties,
+) {
+  captureEvent(event, sanitizeToolProperties(properties));
 }

@@ -4,12 +4,18 @@ import { Download, Loader2 } from "lucide-react";
 import { useCallback, useState } from "react";
 import type JSZip from "jszip";
 import { replaceCoverAndDownload } from "@/lib/epub";
+import { captureToolEvent } from "@/lib/analytics";
+import {
+  TOOL_FAILURE_EVENT,
+  TOOL_FUNNEL_EVENTS,
+} from "@/lib/tool-analytics";
 
 interface DownloadButtonProps {
   zip: JSZip;
   coverPath: string;
   newCoverFile: File;
   originalFileName: string;
+  workflowId?: string;
   onSuccess?: () => void;
   onError?: (message: string) => void;
 }
@@ -19,12 +25,16 @@ export default function DownloadButton({
   coverPath,
   newCoverFile,
   originalFileName,
+  workflowId,
   onSuccess,
   onError,
 }: DownloadButtonProps) {
   const [isDownloading, setIsDownloading] = useState(false);
 
   const handleDownload = useCallback(async () => {
+    if (workflowId) {
+      captureToolEvent(TOOL_FUNNEL_EVENTS[4], { workflow_id: workflowId });
+    }
     setIsDownloading(true);
     const result = await replaceCoverAndDownload(
       zip,
@@ -35,11 +45,21 @@ export default function DownloadButton({
     setIsDownloading(false);
 
     if (result.success) {
+      if (workflowId) {
+        captureToolEvent(TOOL_FUNNEL_EVENTS[5], { workflow_id: workflowId });
+      }
       onSuccess?.();
     } else {
+      if (workflowId) {
+        captureToolEvent(TOOL_FAILURE_EVENT, {
+          workflow_id: workflowId,
+          stage: "download",
+          reason: "generation_error",
+        });
+      }
       onError?.(result.error ?? "Download failed. Please try again.");
     }
-  }, [coverPath, newCoverFile, onError, onSuccess, originalFileName, zip]);
+  }, [coverPath, newCoverFile, onError, onSuccess, originalFileName, workflowId, zip]);
 
   return (
     <>

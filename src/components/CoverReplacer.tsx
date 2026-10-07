@@ -28,6 +28,12 @@ import {
   type CoverTransform,
   type ImageDimensions,
 } from "@/lib/cover-sizes";
+import { captureToolEvent } from "@/lib/analytics";
+import {
+  createWorkflowId,
+  TOOL_FAILURE_EVENT,
+  TOOL_FUNNEL_EVENTS,
+} from "@/lib/tool-analytics";
 import BeforeAfterSlider from "./BeforeAfterSlider";
 import CoverCropEditor from "./CoverCropEditor";
 import CoverSizeSelector from "./CoverSizeSelector";
@@ -125,6 +131,7 @@ function HeroLeft() {
 }
 
 export default function CoverReplacer() {
+  const [workflowId, setWorkflowId] = useState<string | null>(null);
   const [state, setState] = useState<ToolState>("initial");
   const [isProcessingEpub, setIsProcessingEpub] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -178,6 +185,7 @@ export default function CoverReplacer() {
     setSelectedSize(FREE_SIZES[0]);
     setShowCropEditor(false);
     setPendingCoverFile(null);
+    setWorkflowId(null);
   }, [afterImageUrl, beforeImageUrl, uploadedCoverPreviewUrl]);
 
   const handleChangeEpub = useCallback(() => {
@@ -195,11 +203,25 @@ export default function CoverReplacer() {
 
   const handleEpubSelect = useCallback(
     async (file: File) => {
+      const newWorkflowId = createWorkflowId();
+      setWorkflowId(newWorkflowId);
+      captureToolEvent(TOOL_FUNNEL_EVENTS[0], { workflow_id: newWorkflowId });
+
       if (!isValidEpub(file)) {
+        captureToolEvent(TOOL_FAILURE_EVENT, {
+          workflow_id: newWorkflowId,
+          stage: "epub_validation",
+          reason: "invalid_file_type",
+        });
         showToast("Please upload a valid .epub file");
         return;
       }
       if (file.size > MAX_EPUB_FILE_SIZE) {
+        captureToolEvent(TOOL_FAILURE_EVENT, {
+          workflow_id: newWorkflowId,
+          stage: "epub_validation",
+          reason: "file_too_large",
+        });
         showToast("This EPUB is too large. Please use a file under 100MB.");
         return;
       }
@@ -209,12 +231,22 @@ export default function CoverReplacer() {
         const result = await extractCover(file);
 
         if (checkDRM(result.zip)) {
+          captureToolEvent(TOOL_FAILURE_EVENT, {
+            workflow_id: newWorkflowId,
+            stage: "epub_parse",
+            reason: "drm_protected",
+          });
           showToast(
             "This EPUB is DRM-protected and cannot be edited. DRM-free files work perfectly.",
           );
           setIsProcessingEpub(false);
           return;
         }
+
+        captureToolEvent(TOOL_FUNNEL_EVENTS[1], {
+          workflow_id: newWorkflowId,
+          has_existing_cover: Boolean(result.coverBlob),
+        });
 
         setEpubZip(result.zip);
         setEpubFileName(result.fileName);
@@ -245,6 +277,11 @@ export default function CoverReplacer() {
           setState("cover-select");
         }
       } catch {
+        captureToolEvent(TOOL_FAILURE_EVENT, {
+          workflow_id: newWorkflowId,
+          stage: "epub_parse",
+          reason: "parse_error",
+        });
         showToast(
           "This file appears to be corrupted. Please try another EPUB.",
         );
@@ -258,16 +295,37 @@ export default function CoverReplacer() {
   const handleCoverSelect = useCallback(
     async (file: File) => {
       if (!isValidCoverImage(file)) {
+        if (workflowId) {
+          captureToolEvent(TOOL_FAILURE_EVENT, {
+            workflow_id: workflowId,
+            stage: "cover_validation",
+            reason: "invalid_file_type",
+          });
+        }
         showToast("Please upload an image file (JPG, PNG, or WebP)");
         return;
       }
       if (isCoverTooLarge(file)) {
+        if (workflowId) {
+          captureToolEvent(TOOL_FAILURE_EVENT, {
+            workflow_id: workflowId,
+            stage: "cover_validation",
+            reason: "file_too_large",
+          });
+        }
         showToast("Cover image is too large. Please use an image under 10MB.");
         return;
       }
 
       try {
         const dimensions = await getImageDimensions(file);
+        if (workflowId) {
+          captureToolEvent(TOOL_FUNNEL_EVENTS[2], {
+            workflow_id: workflowId,
+            image_type: file.type,
+            target_preset: selectedSize.id,
+          });
+        }
         const previewUrl = URL.createObjectURL(file);
         revokeObjectUrl(afterImageUrl, uploadedCoverPreviewUrl);
         revokeObjectUrl(uploadedCoverPreviewUrl);
@@ -288,16 +346,30 @@ export default function CoverReplacer() {
           setShowCropEditor(false);
           setPendingCoverFile(null);
           setState("preview");
+          if (workflowId) {
+            captureToolEvent(TOOL_FUNNEL_EVENTS[3], {
+              workflow_id: workflowId,
+              preparation_mode: "original",
+              target_preset: selectedSize.id,
+            });
+          }
           return;
         }
 
         setPendingCoverFile(file);
         setShowCropEditor(true);
       } catch {
+        if (workflowId) {
+          captureToolEvent(TOOL_FAILURE_EVENT, {
+            workflow_id: workflowId,
+            stage: "cover_prepare",
+            reason: "image_load_error",
+          });
+        }
         showToast("Failed to load image. Please try another file.");
       }
     },
-    [afterImageUrl, showToast, selectedSize, uploadedCoverPreviewUrl],
+    [afterImageUrl, showToast, selectedSize, uploadedCoverPreviewUrl, workflowId],
   );
 
   const handleCropConfirm = useCallback(
@@ -315,8 +387,15 @@ export default function CoverReplacer() {
       setShowCropEditor(false);
       setPendingCoverFile(null);
       setState("preview");
+      if (workflowId) {
+        captureToolEvent(TOOL_FUNNEL_EVENTS[3], {
+          workflow_id: workflowId,
+          preparation_mode: transform.mode,
+          target_preset: selectedSize.id,
+        });
+      }
     },
-    [afterImageUrl, uploadedCoverPreviewUrl],
+    [afterImageUrl, selectedSize.id, uploadedCoverPreviewUrl, workflowId],
   );
   const handleCropCancel = useCallback(() => {
     setShowCropEditor(false);
@@ -410,6 +489,7 @@ export default function CoverReplacer() {
             coverPath={effectiveCoverPath}
             newCoverFile={exportedCoverFile}
             originalFileName={epubFileName}
+            workflowId={workflowId ?? undefined}
             onError={showToast}
           />
 
