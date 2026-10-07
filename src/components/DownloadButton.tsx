@@ -159,6 +159,7 @@ export default function DownloadButton({
 
   if (generatedFile && generatedUrl) {
     const shareSupported = canShareFile(generatedFile);
+    const showLinkFallbacks = !isIosDevice() || !shareSupported;
 
     return (
       <div
@@ -187,27 +188,31 @@ export default function DownloadButton({
               Save or Open EPUB
             </button>
           )}
-          <a
-            href={generatedUrl}
-            download={generatedFile.name}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={handleDirectSave}
-            className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50"
-          >
-            <Download className="h-4 w-4" />
-            Direct download
-          </a>
-          <a
-            href={generatedUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={handleDirectSave}
-            className="inline-flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-primary hover:text-primary-hover"
-          >
-            <ExternalLink className="h-4 w-4" />
-            Open file
-          </a>
+          {showLinkFallbacks && (
+            <>
+              <a
+                href={generatedUrl}
+                download={generatedFile.name}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={handleDirectSave}
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+              >
+                <Download className="h-4 w-4" />
+                Direct download
+              </a>
+              <a
+                href={generatedUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={handleDirectSave}
+                className="inline-flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-primary hover:text-primary-hover"
+              >
+                <ExternalLink className="h-4 w-4" />
+                Open file
+              </a>
+            </>
+          )}
         </div>
 
         <p className="mt-3 text-xs text-gray-600">
