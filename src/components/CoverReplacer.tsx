@@ -10,7 +10,7 @@ import {
   Smartphone,
 } from "lucide-react";
 import type JSZip from "jszip";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import {
   checkDRM,
   extractCover,
@@ -402,10 +402,6 @@ export default function CoverReplacer() {
     setPendingCoverFile(null);
   }, []);
 
-  const effectiveCoverPath = useMemo(() => {
-    return coverPath ?? "images/cover.jpg";
-  }, [coverPath]);
-
   const beforeForSlider = beforeImageUrl ?? PLACEHOLDER_BEFORE;
   const activeTargetDimensions =
     uploadedCoverDimensions && selectedSize.width === 0
@@ -486,7 +482,7 @@ export default function CoverReplacer() {
 
           <DownloadButton
             zip={epubZip}
-            coverPath={effectiveCoverPath}
+            coverPath={coverPath}
             newCoverFile={exportedCoverFile}
             originalFileName={epubFileName}
             workflowId={workflowId ?? undefined}
