@@ -124,9 +124,9 @@ export const COVER_SIZES: CoverSize[] = [
     height: 2000,
     ratio: "3:4",
     description: "Kobo-friendly portrait ratio",
-    source: "official-ratio",
-    sourceLabel: "Official ratio",
-    note: "Kobo guidance favors a 3:4 portrait ratio.",
+    source: "recommended-preset",
+    sourceLabel: "Recommended preset",
+    note: "Kobo sets no required cover size; 3:4 matches its 1448 x 1072 e-reader screens.",
   },
   {
     id: "google-play",
