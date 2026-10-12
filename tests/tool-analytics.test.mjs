@@ -7,6 +7,7 @@ import {
   TOOL_FAILURE_STAGES,
   TOOL_FUNNEL_EVENTS,
   TOOL_SAVE_EVENT,
+  isProductionHost,
   sanitizeToolProperties,
 } from "../src/lib/tool-analytics.ts";
 
@@ -38,4 +39,11 @@ test("removes private and free-text properties from tool analytics", () => {
     file_name: "private.epub", book_title: "Private title", email: "reader@example.com",
     file_content: "private bytes", raw_error: "private stack trace",
   }), { workflow_id: "anonymous-workflow", stage: "epub_parse", reason: "parse_error" });
+});
+
+test("only reports analytics from the production site", () => {
+  assert.equal(isProductionHost("epubcoverchanger.com"), true);
+  assert.equal(isProductionHost("www.epubcoverchanger.com"), true);
+  assert.equal(isProductionHost("epubcoverchanger-git-prep-launch-qin-lvys-projects.vercel.app"), false);
+  assert.equal(isProductionHost("localhost"), false);
 });

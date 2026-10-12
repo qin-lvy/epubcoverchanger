@@ -1,4 +1,5 @@
 ﻿import {
+  isProductionHost,
   sanitizeToolProperties,
   type ToolEvent,
   type ToolEventProperties,
@@ -45,6 +46,7 @@ export function captureEvent(
   properties: AnalyticsProperties = {},
 ) {
   if (typeof window === "undefined") return;
+  if (!isProductionHost(window.location.hostname)) return;
 
   const { token, host } = getPostHogConfig();
   if (!token || !host) return;

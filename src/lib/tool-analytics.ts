@@ -37,6 +37,13 @@ export function sanitizeToolProperties(properties: Record<string, unknown>): Rec
 }
 
 
+const PRODUCTION_HOSTS = ["epubcoverchanger.com", "www.epubcoverchanger.com"];
+
+/** Vercel previews and local builds share the PostHog token, so only the live site reports. */
+export function isProductionHost(hostname: string): boolean {
+  return PRODUCTION_HOSTS.includes(hostname);
+}
+
 export function createWorkflowId(): string {
   if (typeof crypto?.randomUUID === "function") {
     return crypto.randomUUID();
