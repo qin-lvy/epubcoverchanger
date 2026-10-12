@@ -10,7 +10,7 @@ import TrustBar from "@/components/TrustBar";
 export const metadata: Metadata = {
   title: "Epub Cover Changer - Change EPUB Book Cover Online Free",
   description:
-    "Free online tool to change your EPUB ebook cover instantly. No upload to server, before/after preview, works on all devices.",
+    "Change your EPUB cover online free in seconds. Files never leave your device: no upload, no signup. Works on iPhone, Android and desktop.",
   openGraph: {
     title: "Epub Cover Changer - Change EPUB Book Cover Online Free",
     description:
