@@ -12,7 +12,7 @@
   {
     question: "What is the recommended EPUB cover size?",
     answer:
-      "There is no single EPUB cover size required by every platform. Standard EPUB, Apple Books, and Google Play Books work well with a 1600 x 2400px preset, Amazon KDP's ideal ebook cover is 1600 x 2560px, and Kobo favors a 3:4 ratio such as 1500 x 2000px. Our tool labels each preset so you know whether it is an official ideal, official ratio, or recommended preset.",
+      "There is no single EPUB cover size required by every platform. Standard EPUB, Apple Books, and Google Play Books work well with a 1600 x 2400px preset, Amazon KDP's ideal ebook cover is 1600 x 2560px, and Kobo sets no required size, so a 3:4 preset such as 1500 x 2000px matches its e-reader screens. Our tool labels each preset so you know whether it is an official ideal or a recommended preset.",
   },
   {
     question: "Can I change DRM-protected EPUB covers?",

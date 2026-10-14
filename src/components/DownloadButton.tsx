@@ -22,7 +22,7 @@ import {
 
 interface DownloadButtonProps {
   zip: JSZip;
-  coverPath: string;
+  coverPath: string | null;
   newCoverFile: File;
   originalFileName: string;
   workflowId?: string;

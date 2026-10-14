@@ -10,11 +10,11 @@ import TrustBar from "@/components/TrustBar";
 export const metadata: Metadata = {
   title: "Epub Cover Changer - Change EPUB Book Cover Online Free",
   description:
-    "Free online tool to change your EPUB ebook cover instantly. No upload to server, before/after preview, works on all devices.",
+    "Change your EPUB cover online free in seconds. Files never leave your device: no upload, no signup. Works on iPhone, Android and desktop.",
   openGraph: {
     title: "Epub Cover Changer - Change EPUB Book Cover Online Free",
     description:
-      "Free online tool to replace your ebook cover. 100% private - files never leave your browser.",
+      "Change your EPUB cover online free in seconds. Files never leave your device: no upload, no signup. Works on iPhone, Android and desktop.",
     url: "https://epubcoverchanger.com",
     siteName: "Epub Cover Changer",
     images: [
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Epub Cover Changer - Change EPUB Book Cover Online Free",
     description:
-      "Free online tool to replace your ebook cover. 100% private.",
+      "Change your EPUB cover online free in seconds. Files never leave your device: no upload, no signup. Works on iPhone, Android and desktop.",
     images: ["https://epubcoverchanger.com/og-image.png"],
   },
   alternates: { canonical: "https://epubcoverchanger.com" },
