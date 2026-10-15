@@ -27,6 +27,11 @@ const footerColumns: FooterColumn[] = [
         label: "EPUB cover guide",
         isAnchor: false,
       },
+      {
+        href: "/blog/send-epub-to-kindle",
+        label: "Send EPUB to Kindle",
+        isAnchor: false,
+      },
     ],
   },
   {

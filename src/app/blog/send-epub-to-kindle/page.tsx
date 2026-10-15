@@ -11,7 +11,13 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: pageUrl },
-  openGraph: { title, description, url: pageUrl, type: "article" },
+  openGraph: {
+    title,
+    description,
+    url: pageUrl,
+    type: "article",
+    images: [{ url: "https://epubcoverchanger.com/og-image.png", width: 1200, height: 630 }],
+  },
 };
 
 const sources: BlogSource[] = [
@@ -39,6 +45,7 @@ const articleSchema = {
   headline: title,
   description,
   url: pageUrl,
+  image: "https://epubcoverchanger.com/blog/send-epub-to-kindle.svg",
   datePublished: "2026-10-15",
   dateModified: "2026-10-15",
   author: { "@type": "Organization", name: "EpubCoverChanger.com", url: "https://epubcoverchanger.com" },
@@ -80,7 +87,35 @@ export default function SendEpubToKindlePage() {
         </p>
       </div>
 
-      <section className={body}>
+      <figure className="mt-10">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/blog/send-epub-to-kindle.svg"
+          width={960}
+          height={420}
+          alt="An EPUB without a cover, the same EPUB after adding a cover at EpubCoverChanger.com, and the book showing its cover in the Kindle library after Send to Kindle"
+          className="h-auto w-full rounded-3xl border border-gray-200"
+        />
+        <figcaption className="mt-3 text-center text-sm text-gray-500">
+          Add the cover first, then send. Kindle only shows a cover the EPUB
+          declares.
+        </figcaption>
+      </figure>
+
+      <nav aria-label="On this page" className="mt-10 rounded-2xl border border-gray-200 p-5 text-sm">
+        <p className="font-semibold text-gray-950">On this page</p>
+        <ul className="mt-2 space-y-1 text-primary">
+          <li><a href="#methods" className="hover:underline">Ways to send an EPUB to Kindle</a></li>
+          <li><a href="#cover" className="hover:underline">Before you send: check the cover</a></li>
+          <li><a href="#web" className="hover:underline">Send with the web page</a></li>
+          <li><a href="#email" className="hover:underline">Send by email</a></li>
+          <li><a href="#iphone" className="hover:underline">Send from iPhone</a></li>
+          <li><a href="#android" className="hover:underline">Send from Android</a></li>
+          <li><a href="#troubleshooting" className="hover:underline">If the book doesn&apos;t arrive</a></li>
+        </ul>
+      </nav>
+
+      <section id="methods" className={body}>
         <h2 className={h2}>Ways to send an EPUB to Kindle</h2>
         <div className="overflow-x-auto rounded-2xl border border-gray-200">
           <table className="w-full min-w-[560px] text-left text-sm">
@@ -104,7 +139,7 @@ export default function SendEpubToKindlePage() {
               </tr>
               <tr>
                 <td className="px-4 py-3">Kindle app on iPhone or Android (Share)</td>
-                <td className="px-4 py-3">50 MB<Cite n={4} /></td>
+                <td className="px-4 py-3">Not published by Amazon; use the web page for large files</td>
                 <td className="px-4 py-3">Books saved on your phone</td>
               </tr>
               <tr>
@@ -123,8 +158,8 @@ export default function SendEpubToKindlePage() {
         </p>
       </section>
 
-      <section className={body}>
-        <h2 className={h2}>Step 1: Make sure your EPUB has a cover</h2>
+      <section id="cover" className={body}>
+        <h2 className={h2}>Before you send: check the cover</h2>
         <p>
           Kindle shows the image the EPUB declares as its cover. Many EPUBs
           don&apos;t have one. Between 7 and 14 October 2026, 265 people
@@ -151,8 +186,8 @@ export default function SendEpubToKindlePage() {
         </p>
       </section>
 
-      <section className={body}>
-        <h2 className={h2}>Step 2: Send it with the Send to Kindle web page</h2>
+      <section id="web" className={body}>
+        <h2 className={h2}>Send an EPUB to Kindle with the web page (easiest)</h2>
         <ol className={steps}>
           <li>Go to amazon.com/sendtokindle and sign in with your Amazon account.</li>
           <li>Drag your EPUB into the upload box, or click to choose the file.</li>
@@ -161,7 +196,7 @@ export default function SendEpubToKindlePage() {
         </ol>
       </section>
 
-      <section className={body}>
+      <section id="email" className={body}>
         <h2 className={h2}>Send an EPUB to Kindle by email</h2>
         <ol className={steps}>
           <li>
@@ -183,7 +218,7 @@ export default function SendEpubToKindlePage() {
         </ol>
       </section>
 
-      <section className={body}>
+      <section id="iphone" className={body}>
         <h2 className={h2}>Send an EPUB to Kindle from iPhone</h2>
         <ol className={steps}>
           <li>Install the Kindle app and sign in.</li>
@@ -191,7 +226,10 @@ export default function SendEpubToKindlePage() {
             Open the Files app, long-press the EPUB, tap <strong>Share</strong>,
             and choose <strong>Kindle</strong>.
           </li>
-          <li>Confirm the send. The book is added to your Kindle library.</li>
+          <li>
+            Confirm the send. The book is added to your Kindle library
+            <Cite n={3} />.
+          </li>
         </ol>
         <p>
           No cover yet? Open epubcoverchanger.com in Safari first, add the
@@ -200,7 +238,7 @@ export default function SendEpubToKindlePage() {
         </p>
       </section>
 
-      <section className={body}>
+      <section id="android" className={body}>
         <h2 className={h2}>Send an EPUB to Kindle from Android</h2>
         <ol className={steps}>
           <li>Install the Kindle app and sign in.</li>
@@ -212,7 +250,7 @@ export default function SendEpubToKindlePage() {
         </ol>
       </section>
 
-      <section className={body}>
+      <section id="troubleshooting" className={body}>
         <h2 className={h2}>If the book doesn&apos;t arrive</h2>
         <ul className="list-disc space-y-2 pl-6">
           <li>
@@ -245,6 +283,16 @@ export default function SendEpubToKindlePage() {
 
       <section className={body}>
         <h2 className={h2}>FAQ</h2>
+        <h3 className="text-lg font-semibold text-gray-950">
+          Can you read EPUB books on Kindle?
+        </h3>
+        <p>
+          Yes. Kindle devices and apps can&apos;t open an EPUB file directly,
+          but once you send it with Send to Kindle, Amazon converts it and the
+          book reads like any other Kindle book
+          <Cite n={1} />
+          <Cite n={3} />.
+        </p>
         <h3 className="text-lg font-semibold text-gray-950">
           Do I need to convert EPUB to MOBI or AZW3 first?
         </h3>
