@@ -6,6 +6,7 @@ const routes = [
   { path: "", priority: 1, changeFrequency: "weekly" as const },
   { path: "/blog/how-to-change-epub-cover", priority: 0.8, changeFrequency: "monthly" as const },
   { path: "/blog/best-epub-cover-size", priority: 0.8, changeFrequency: "monthly" as const },
+  { path: "/blog/send-epub-to-kindle", priority: 0.8, changeFrequency: "monthly" as const },
   { path: "/about", priority: 0.6, changeFrequency: "monthly" as const },
   { path: "/pricing", priority: 0.6, changeFrequency: "monthly" as const },
   { path: "/privacy", priority: 0.4, changeFrequency: "yearly" as const },
