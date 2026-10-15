@@ -21,7 +21,7 @@ const footerColumns: FooterColumn[] = [
   {
     title: "Learn more",
     links: [
-      { href: "#how-it-works", label: "How it works", isAnchor: true },
+      { href: "/#how-it-works", label: "How it works", isAnchor: true },
       {
         href: "/blog/best-epub-cover-size",
         label: "EPUB cover guide",

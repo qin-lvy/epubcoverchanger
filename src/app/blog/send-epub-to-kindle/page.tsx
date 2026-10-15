@@ -34,8 +34,12 @@ const sources: BlogSource[] = [
     url: "https://blog.the-ebook-reader.com/2022/12/20/send-to-kindle-apps-for-pc-and-mac-now-support-epub/",
   },
   {
-    label: "Take Control Books: the Send to Kindle app's 50 MB limit",
+    label: "Take Control Books: the Send to Kindle app's 50 MB limit (2022)",
     url: "https://www.takecontrolbooks.com/your-kindle-can-finally-read-epub-files/",
+  },
+  {
+    label: "calibre User Manual: E-book conversion",
+    url: "https://manual.calibre-ebook.com/conversion.html",
   },
 ];
 
@@ -111,7 +115,9 @@ export default function SendEpubToKindlePage() {
           <li><a href="#email" className="hover:underline">Send by email</a></li>
           <li><a href="#iphone" className="hover:underline">Send from iPhone</a></li>
           <li><a href="#android" className="hover:underline">Send from Android</a></li>
+          <li><a href="#usb" className="hover:underline">Using a USB cable instead</a></li>
           <li><a href="#troubleshooting" className="hover:underline">If the book doesn&apos;t arrive</a></li>
+          <li><a href="#faq" className="hover:underline">FAQ</a></li>
         </ul>
       </nav>
 
@@ -144,7 +150,7 @@ export default function SendEpubToKindlePage() {
               </tr>
               <tr>
                 <td className="px-4 py-3">Send to Kindle app for Windows or Mac</td>
-                <td className="px-4 py-3">50 MB<Cite n={4} /></td>
+                <td className="px-4 py-3">50 MB (reported in 2022)<Cite n={4} /></td>
                 <td className="px-4 py-3">Right-click sending from your desktop</td>
               </tr>
             </tbody>
@@ -153,19 +159,25 @@ export default function SendEpubToKindlePage() {
         <p>
           Send to Kindle converts the EPUB into a Kindle format during
           delivery
-          <Cite n={3} />. Kindle e-readers do not open EPUB files copied over
-          USB, so use one of the methods above instead.
+          <Cite n={3} />. Copying an EPUB to a Kindle over USB does not work
+          without converting it first; see{" "}
+          <a href="#usb" className="text-primary hover:underline">
+            using a USB cable instead
+          </a>
+          .
         </p>
       </section>
 
       <section id="cover" className={body}>
         <h2 className={h2}>Before you send: check the cover</h2>
         <p>
-          Kindle shows the image the EPUB declares as its cover. Many EPUBs
-          don&apos;t have one. Between 7 and 14 October 2026, 265 people
-          uploaded EPUB files to our tool 823 times; 198 of those uploads had
-          no cover image we could detect, and 125 of the 265 people (47%) ran
-          into at least one such file.
+          Kindle shows the image the EPUB declares as its cover, and plenty of
+          EPUBs don&apos;t declare one. Fanfiction downloads and files made
+          with simple converters are common examples. Among people who used
+          our tool between 7 and 14 October 2026, 125 of 265 (47%) uploaded at
+          least one EPUB with no cover we could detect. That is not a figure
+          for all EPUBs, since people often come to us because a cover is
+          missing, but it shows how often this trips readers up.
         </p>
         <p>
           To add or replace the cover, open{" "}
@@ -202,7 +214,7 @@ export default function SendEpubToKindlePage() {
           <li>
             Find your Send to Kindle email address on Amazon&apos;s{" "}
             <strong>Manage Your Content and Devices</strong> page, under
-            Preferences.
+            Preferences, then Personal Document Settings.
           </li>
           <li>
             On the same page, add the address you&apos;ll send from to your{" "}
@@ -224,11 +236,12 @@ export default function SendEpubToKindlePage() {
           <li>Install the Kindle app and sign in.</li>
           <li>
             Open the Files app, long-press the EPUB, tap <strong>Share</strong>,
-            and choose <strong>Kindle</strong>.
+            and choose <strong>Kindle</strong>. If Kindle isn&apos;t listed,
+            tap <strong>More</strong> and turn it on.
           </li>
           <li>
             Confirm the send. The book is added to your Kindle library
-            <Cite n={3} />.
+            <Cite n={1} />.
           </li>
         </ol>
         <p>
@@ -246,8 +259,24 @@ export default function SendEpubToKindlePage() {
             In your Files or Downloads app, open the EPUB&apos;s share menu and
             choose <strong>Kindle</strong>.
           </li>
-          <li>Confirm the send.</li>
+          <li>
+            Confirm the send. Amazon lists iOS and Android among its Send to
+            Kindle options
+            <Cite n={1} />.
+          </li>
         </ol>
+      </section>
+
+      <section id="usb" className={body}>
+        <h2 className={h2}>Using a USB cable instead</h2>
+        <p>
+          Kindle e-readers can&apos;t open an EPUB copied over USB. If you
+          prefer a cable, convert the book to AZW3 first, for example with
+          calibre&apos;s free conversion tool
+          <Cite n={5} />, then copy the AZW3 file to the Kindle&apos;s
+          documents folder. For most people, Send to Kindle is simpler and
+          keeps the book synced across devices.
+        </p>
       </section>
 
       <section id="troubleshooting" className={body}>
@@ -281,7 +310,7 @@ export default function SendEpubToKindlePage() {
         </ul>
       </section>
 
-      <section className={body}>
+      <section id="faq" className={body}>
         <h2 className={h2}>FAQ</h2>
         <h3 className="text-lg font-semibold text-gray-950">
           Can you read EPUB books on Kindle?
