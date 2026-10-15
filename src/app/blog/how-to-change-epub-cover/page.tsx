@@ -248,7 +248,11 @@ export default function HowToChangeEpubCoverPage() {
         </div>
         <p>
           Amazon changes these limits from time to time, so check its Send to
-          Kindle page if a file is rejected. Kindle e-readers do not open EPUB
+          Kindle page if a file is rejected. For step-by-step instructions, see{" "}
+          <Link href="/blog/send-epub-to-kindle" className="text-primary hover:underline">
+            how to send an EPUB to Kindle
+          </Link>
+          . Kindle e-readers do not open EPUB
           files copied over USB; use Send to Kindle so the file gets converted.
         </p>
       </section>
