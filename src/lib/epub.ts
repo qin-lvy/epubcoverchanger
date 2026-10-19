@@ -152,7 +152,7 @@ function findItemHrefById(opfContent: string, itemId: string): string | null {
   return null;
 }
 
-async function updateEpubModifiedDate(zip: JSZip): Promise<void> {
+export async function updateEpubModifiedDate(zip: JSZip): Promise<void> {
   const containerFile = zip.file("META-INF/container.xml");
   if (!containerFile) return;
 
@@ -227,7 +227,7 @@ function relativeHref(opfDir: string, fullPath: string): string {
   return "../".repeat(depth) + fullPath;
 }
 
-async function readPackageDocument(zip: JSZip): Promise<PackageDocument | null> {
+export async function readPackageDocument(zip: JSZip): Promise<PackageDocument | null> {
   const containerXml = await zip.file("META-INF/container.xml")?.async("text");
   const opfPath = containerXml?.match(/full-path=["']([^"']+)["']/)?.[1];
   if (!opfPath) return null;
