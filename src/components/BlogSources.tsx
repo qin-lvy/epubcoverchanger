@@ -16,10 +16,16 @@ export function Cite({ n }: { n: number }) {
   );
 }
 
-export function SourceList({ sources }: { sources: BlogSource[] }) {
+export function SourceList({
+  sources,
+  title = "Sources",
+}: {
+  sources: BlogSource[];
+  title?: string;
+}) {
   return (
     <section className="mt-12 border-t border-gray-200 pt-8">
-      <h2 className="text-lg font-semibold text-gray-950">Sources</h2>
+      <h2 className="text-lg font-semibold text-gray-950">{title}</h2>
       <ol className="mt-4 space-y-2 text-sm leading-6 text-gray-600">
         {sources.map((source, index) => (
           <li key={source.url} id={`source-${index + 1}`}>

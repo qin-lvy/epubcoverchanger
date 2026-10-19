@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-labelledby="t d">
+  <title id="t">Del EPUB al Kindle con la portada intacta</title>
+  <desc id="d">Tres pasos: un EPUB sin portada, el mismo EPUB después de añadir una portada en EpubCoverChanger.com y el libro con su portada en la biblioteca de Kindle después de Send to Kindle.</desc>
+  <rect width="960" height="420" rx="28" fill="#F8FAFC"/>
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" text-anchor="middle">
+    <!-- Step 1: EPUB without cover -->
+    <rect x="90" y="70" width="150" height="210" rx="10" fill="#E5E7EB" stroke="#CBD5E1" stroke-width="3"/>
+    <rect x="90" y="70" width="18" height="210" rx="6" fill="#CBD5E1"/>
+    <text x="170" y="192" font-size="48" font-weight="700" fill="#94A3B8">?</text>
+    <text x="165" y="330" font-size="30" font-weight="700" fill="#0F172A">Sin portada</text>
+    <text x="165" y="368" font-size="23" fill="#475569">en blanco en Kindle</text>
+
+    <!-- Arrow 1 -->
+    <line x1="268" y1="175" x2="358" y2="175" stroke="#2563EB" stroke-width="5" stroke-linecap="round"/>
+    <path d="M352 163 L370 175 L352 187 Z" fill="#2563EB"/>
+    <text x="313" y="124" font-size="24" font-weight="700" fill="#2563EB">Añadir</text><text x="313" y="152" font-size="24" font-weight="700" fill="#2563EB">portada</text>
+
+    <!-- Step 2: EPUB with cover -->
+    <rect x="400" y="70" width="150" height="210" rx="10" fill="#1E3A8A"/>
+    <rect x="400" y="70" width="18" height="210" rx="6" fill="#172554"/>
+    <rect x="432" y="110" width="94" height="10" rx="5" fill="#BFDBFE"/>
+    <rect x="442" y="132" width="74" height="8" rx="4" fill="#93C5FD"/>
+    <circle cx="479" cy="205" r="34" fill="#F59E0B"/>
+    <text x="475" y="330" font-size="30" font-weight="700" fill="#0F172A">Portada añadida</text>
+    <text x="475" y="368" font-size="23" fill="#475569">EpubCoverChanger.com</text>
+
+    <!-- Arrow 2 -->
+    <line x1="578" y1="175" x2="668" y2="175" stroke="#2563EB" stroke-width="5" stroke-linecap="round"/>
+    <path d="M662 163 L680 175 L662 187 Z" fill="#2563EB"/>
+    <text x="623" y="124" font-size="24" font-weight="700" fill="#2563EB">Enviar a</text><text x="623" y="152" font-size="24" font-weight="700" fill="#2563EB">Kindle</text>
+
+    <!-- Step 3: Kindle library -->
+    <rect x="705" y="50" width="170" height="250" rx="18" fill="#111827"/>
+    <rect x="719" y="66" width="142" height="206" rx="6" fill="#F3F4F6"/>
+    <rect x="731" y="80" width="54" height="80" rx="4" fill="#1E3A8A"/>
+    <circle cx="758" cy="128" r="14" fill="#F59E0B"/>
+    <rect x="795" y="80" width="54" height="80" rx="4" fill="#D1D5DB"/>
+    <rect x="731" y="174" width="54" height="80" rx="4" fill="#D1D5DB"/>
+    <rect x="795" y="174" width="54" height="80" rx="4" fill="#D1D5DB"/>
+    <rect x="727" y="76" width="62" height="88" rx="6" fill="none" stroke="#2563EB" stroke-width="3"/>
+    <text x="790" y="330" font-size="30" font-weight="700" fill="#0F172A">En tu biblioteca</text>
+    <text x="790" y="368" font-size="23" fill="#475569">con su portada</text>
+  </g>
+</svg>

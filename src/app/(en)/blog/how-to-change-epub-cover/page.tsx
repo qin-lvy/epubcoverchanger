@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Cite, SourceList, type BlogSource } from "@/components/BlogSources";
+import { localizedAlternates } from "@/lib/localized-routes";
 
 const pageUrl = "https://epubcoverchanger.com/blog/how-to-change-epub-cover";
 const title = "Change an EPUB Cover for Kindle & Fix Missing Covers";
@@ -10,7 +11,7 @@ const description =
 export const metadata: Metadata = {
   title,
   description,
-  alternates: { canonical: pageUrl },
+  alternates: localizedAlternates("changeCover", "en"),
   openGraph: { title, description, url: pageUrl, type: "article" },
 };
 

@@ -1,7 +1,9 @@
 ﻿"use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useLocale } from "@/lib/i18n";
+import { counterpartPath, localizedRoutes } from "@/lib/localized-routes";
 
 type FooterLink =
   | {
@@ -22,14 +24,15 @@ type FooterColumn = {
 
 export default function Footer() {
   const { locale, t } = useLocale();
+  const pathname = usePathname();
   const homePath = locale === "pt" ? "/pt" : locale === "es" ? "/es" : "/";
   const localizedColumns: FooterColumn[] = [
     {
       title: t("footer.learn"),
       links: [
         { href: `${homePath}#how-it-works`, label: t("nav.howItWorks"), isAnchor: true },
-        { href: "/blog/best-epub-cover-size", label: t("footer.guide"), isAnchor: false },
-        { href: "/blog/send-epub-to-kindle", label: t("footer.sendKindle"), isAnchor: false },
+        { href: localizedRoutes.coverSize[locale], label: t("footer.guide"), isAnchor: false },
+        { href: localizedRoutes.sendToKindle[locale], label: t("footer.sendKindle"), isAnchor: false },
       ],
     },
     {
@@ -49,7 +52,7 @@ export default function Footer() {
     {
       title: t("footer.company"),
       links: [
-        { href: "/blog/how-to-change-epub-cover", label: t("nav.blog"), isAnchor: false },
+        { href: localizedRoutes.changeCover[locale], label: t("nav.blog"), isAnchor: false },
         { href: "/about", label: t("nav.about"), isAnchor: false },
         { href: "/pricing", label: t("nav.pricing"), isAnchor: false },
       ],
@@ -115,11 +118,11 @@ export default function Footer() {
             <Link href={`${homePath}#feedback`} className="hover:text-white">{locale === "en" ? "Feedback" : t("footer.feedback")}</Link>
           </div>
           <nav aria-label={t("nav.language")} className="flex items-center text-[13px] text-white/70">
-            <Link href="/" className={`hover:text-white ${locale === "en" ? "font-semibold text-white" : ""}`}>English</Link>
+            <Link href={counterpartPath(pathname, "en")} className={`hover:text-white ${locale === "en" ? "font-semibold text-white" : ""}`}>English</Link>
             <span className="mx-2">|</span>
-            <Link href="/pt" className={`hover:text-white ${locale === "pt" ? "font-semibold text-white" : ""}`}>Português</Link>
+            <Link href={counterpartPath(pathname, "pt")} className={`hover:text-white ${locale === "pt" ? "font-semibold text-white" : ""}`}>Português</Link>
             <span className="mx-2">|</span>
-            <Link href="/es" className={`hover:text-white ${locale === "es" ? "font-semibold text-white" : ""}`}>Español</Link>
+            <Link href={counterpartPath(pathname, "es")} className={`hover:text-white ${locale === "es" ? "font-semibold text-white" : ""}`}>Español</Link>
           </nav>
         </div>
       </div>
