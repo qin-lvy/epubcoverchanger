@@ -39,6 +39,7 @@ export default function Footer() {
       title: t("footer.tools"),
       links: [
         { href: homePath, label: t("footer.changeCover"), isAnchor: false },
+        ...(locale === "en" ? [{ href: "/epub-metadata-editor", label: "Edit EPUB metadata", isAnchor: false }] : []),
         { label: t("footer.batch"), comingSoon: true },
       ],
     },
