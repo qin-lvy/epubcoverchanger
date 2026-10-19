@@ -78,7 +78,7 @@ const faqs = [
   {
     question: "¿Cuál es el mejor tamaño de portada para un EPUB?",
     answer:
-      "No hay un tamaño único. Usa 1600 x 2560 px para Kindle y 1600 x 2400 px (2:3) para Apple Books, Kobo y Google Play Libros. Exporta en JPEG RGB de menos de 5 MB.",
+      "No hay un tamaño único. Usa 1600 x 2560 px para Kindle y 1600 x 2400 px (2:3) para Apple Books, Kobo y Google Play Libros. Exporta en JPEG RGB; si el archivo pesa menos de 5 MB, también cumple el límite de Kobo.",
   },
   {
     question: "¿Qué tamaño de portada es el ideal para Kindle?",
@@ -88,7 +88,7 @@ const faqs = [
   {
     question: "¿Puedo ampliar una imagen pequeña para llegar al tamaño?",
     answer:
-      "No es buena idea. Ampliarla hace el archivo más pesado sin añadir detalle, y Apple rechaza las portadas ampliadas.",
+      "No es buena idea. Ampliarla hace el archivo más pesado sin añadir detalle. Apple pide no ampliar imágenes pequeñas y rechaza las portadas demasiado borrosas o pixeladas.",
   },
 ];
 
@@ -99,6 +99,7 @@ const articleSchema = {
   description,
   url: pageUrl,
   inLanguage: "es",
+  image: "https://epubcoverchanger.com/og-image.png",
   datePublished: "2026-10-19",
   dateModified: "2026-10-19",
   author: { "@type": "Organization", name: "EpubCoverChanger.com", url: "https://epubcoverchanger.com" },
@@ -147,7 +148,8 @@ export default function TamanoPortadaEpubPage() {
           <strong>1600 x 2560 px</strong> para Kindle, que es el ideal que
           indica Amazon. Usa <strong>1600 x 2400 px</strong>{" "}(2:3) para Apple
           Books, Kobo y Google Play Libros; cumple el mínimo de las tres
-          tiendas. Exporta en JPEG RGB de menos de 5 MB.
+          tiendas. Exporta en JPEG RGB. Te recomendamos que el archivo pese
+          menos de 5 MB, que es el límite de Kobo; Amazon admite hasta 50 MB.
         </p>
       </div>
 
@@ -195,6 +197,18 @@ export default function TamanoPortadaEpubPage() {
       </section>
 
       <section className={body}>
+        <h2 className={h2}>Qué tamaño elige la gente en la práctica</h2>
+        <p>
+          Entre el 7 y el 18 de octubre de 2026, 382 personas prepararon 1729
+          portadas con nuestra herramienta. El 69 % se quedó con el EPUB
+          estándar (1600 x 2400), que viene seleccionado por defecto; el 18 %
+          eligió Amazon Kindle (1600 x 2560); el 7 %, Apple Books; el 4 %,
+          Kobo; y menos del 1 %, Google Play Libros. Es decir: quien cambia de
+          tamaño casi siempre lo hace pensando en Kindle.
+        </p>
+      </section>
+
+      <section className={body}>
         <h2 className={h2}>Por qué los tamaños son distintos</h2>
         <p>
           Cada tienda adapta la portada a pantallas y miniaturas diferentes. La
@@ -223,7 +237,9 @@ export default function TamanoPortadaEpubPage() {
         <p>
           Parte de la imagen original más grande que tengas. Ampliar una imagen
           pequeña hasta 1600 x 2560 hace el archivo más pesado pero no añade
-          detalle, y Apple rechaza expresamente las portadas ampliadas
+          detalle. Apple pide no ampliar una imagen más pequeña solo para
+          alcanzar el tamaño mínimo y rechaza las portadas demasiado borrosas o
+          pixeladas
           <Cite n={2} />.
         </p>
       </section>

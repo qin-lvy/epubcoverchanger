@@ -83,6 +83,7 @@ const articleSchema = {
   description,
   url: pageUrl,
   inLanguage: "pt-BR",
+  image: "https://epubcoverchanger.com/og-image.png",
   datePublished: "2026-10-19",
   dateModified: "2026-10-19",
   author: { "@type": "Organization", name: "EpubCoverChanger.com", url: "https://epubcoverchanger.com" },

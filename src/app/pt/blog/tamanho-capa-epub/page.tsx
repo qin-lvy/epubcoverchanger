@@ -78,7 +78,7 @@ const faqs = [
   {
     question: "Qual o melhor tamanho de capa de EPUB?",
     answer:
-      "Não existe um tamanho único. Use 1600 x 2560 px para Kindle e 1600 x 2400 px (2:3) para Apple Books, Kobo e Google Play Livros. Exporte em JPEG RGB com menos de 5 MB.",
+      "Não existe um tamanho único. Use 1600 x 2560 px para Kindle e 1600 x 2400 px (2:3) para Apple Books, Kobo e Google Play Livros. Exporte em JPEG RGB; manter o arquivo abaixo de 5 MB atende também ao limite da Kobo.",
   },
   {
     question: "Qual o tamanho de capa ideal para Kindle?",
@@ -88,7 +88,7 @@ const faqs = [
   {
     question: "Posso ampliar uma imagem pequena para chegar ao tamanho?",
     answer:
-      "Não é uma boa ideia. Ampliar deixa o arquivo maior sem acrescentar detalhes, e a Apple recusa capas ampliadas.",
+      "Não é uma boa ideia. Ampliar deixa o arquivo maior sem acrescentar detalhes. A Apple pede para não ampliar imagens pequenas e recusa capas muito borradas ou pixeladas.",
   },
 ];
 
@@ -99,6 +99,7 @@ const articleSchema = {
   description,
   url: pageUrl,
   inLanguage: "pt-BR",
+  image: "https://epubcoverchanger.com/og-image.png",
   datePublished: "2026-10-19",
   dateModified: "2026-10-19",
   author: { "@type": "Organization", name: "EpubCoverChanger.com", url: "https://epubcoverchanger.com" },
@@ -147,7 +148,8 @@ export default function TamanhoCapaEpubPage() {
           <strong>1600 x 2560 px</strong> para Kindle, que é o ideal indicado
           pela Amazon. Use <strong>1600 x 2400 px</strong>{" "}(2:3) para Apple
           Books, Kobo e Google Play Livros; ele atende ao mínimo das três lojas.
-          Exporte em JPEG RGB, com menos de 5 MB.
+          Exporte em JPEG RGB. Recomendamos manter o arquivo abaixo de 5 MB,
+          que é o limite da Kobo; a Amazon aceita até 50 MB.
         </p>
       </div>
 
@@ -194,6 +196,17 @@ export default function TamanhoCapaEpubPage() {
       </section>
 
       <section className={body}>
+        <h2 className={h2}>Que tamanho as pessoas escolhem na prática</h2>
+        <p>
+          Entre 7 e 18 de outubro de 2026, 382 pessoas prepararam 1.729 capas
+          na nossa ferramenta. 69% delas ficaram no EPUB padrão (1600 x 2400),
+          que já vem selecionado; 18% escolheram Amazon Kindle (1600 x 2560); 7%
+          Apple Books; 4% Kobo; e menos de 1% Google Play Livros. Ou seja: quem
+          troca de tamanho quase sempre está mirando o Kindle.
+        </p>
+      </section>
+
+      <section className={body}>
         <h2 className={h2}>Por que os tamanhos são diferentes</h2>
         <p>
           Cada loja encaixa a capa em telas e miniaturas diferentes. O formato
@@ -221,7 +234,8 @@ export default function TamanhoCapaEpubPage() {
         <p>
           Comece pela maior imagem original que você tiver. Ampliar uma imagem
           pequena até 1600 x 2560 deixa o arquivo maior, mas não acrescenta
-          detalhes, e a Apple recusa explicitamente capas ampliadas
+          detalhes. A Apple pede para não ampliar uma imagem menor só para
+          atingir o tamanho mínimo e recusa capas muito borradas ou pixeladas
           <Cite n={2} />.
         </p>
       </section>
