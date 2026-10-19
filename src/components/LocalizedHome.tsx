@@ -15,7 +15,7 @@ export default function LocalizedHome({ locale }: { locale: Exclude<Locale, "en"
     "@type": "WebApplication",
     name: "Epub Cover Changer",
     url: `${baseUrl}${path}`,
-    description: locale === "pt" ? "Mude a capa do seu EPUB em segundos" : "Cambia la portada de tu EPUB en segundos",
+    description: locale === "pt" ? "Troque a capa do seu EPUB em segundos" : "Cambia la portada de tu EPUB en segundos",
     applicationCategory: "UtilityApplication",
     operatingSystem: "Any",
     browserRequirements: "Requires JavaScript",

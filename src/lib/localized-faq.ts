@@ -8,7 +8,6 @@ const faqByLocale = {
     ["Posso mudar a capa de um EPUB protegido por DRM?", "Não. DRM (Gerenciamento de Direitos Digitais) é uma criptografia que impede a edição. Se o EPUB tiver DRM, normalmente vindo de grandes lojas, nenhuma ferramenta poderá modificá-lo. Arquivos sem DRM de autopublicação, AO3, Project Gutenberg e outras fontes funcionam normalmente."],
     ["É realmente grátis?", "Sim. O Epub Cover Changer é grátis para trocar a capa de um EPUB por vez. Você pode processar um EPUB de até 100 MB, sem marca-d'água e sem criar uma conta. Os futuros recursos Pro serão voltados para processamento em lote, predefinições salvas, exportações para várias plataformas e limites maiores."],
     ["Preciso criar uma conta?", "Não é preciso criar uma conta para usar a ferramenta gratuita atual. O login só fará sentido quando trouxer valor real, como predefinições salvas, acesso antecipado ao Pro, histórico opcional e fluxos repetidos mais rápidos."],
-    
   ],
   es: [
     ["¿Cómo cambio la portada de un archivo EPUB?", "Solo tienes que subir tu archivo EPUB y después una nueva imagen de portada (JPG, PNG o WebP). Verás una vista previa del antes y el después y podrás descargar el EPUB actualizado con un clic. Todo el proceso tarda unos segundos y tus archivos nunca salen del navegador."],
@@ -17,7 +16,6 @@ const faqByLocale = {
     ["¿Puedo cambiar la portada de un EPUB protegido con DRM?", "No. DRM (gestión de derechos digitales) es un cifrado que impide editar el archivo. Si tu EPUB está protegido con DRM, normalmente porque procede de una gran tienda, ninguna herramienta podrá modificarlo. Los archivos sin DRM de autopublicación, AO3, Project Gutenberg y otras fuentes funcionan perfectamente."],
     ["¿De verdad es gratis?", "Sí. Epub Cover Changer es gratis para cambiar la portada de un EPUB cada vez. Puedes procesar un EPUB de hasta 100 MB, sin marca de agua y sin crear una cuenta. Las futuras funciones Pro se centrarán en el procesamiento por lotes, los preajustes guardados, las exportaciones para varias plataformas y límites de uso más altos."],
     ["¿Necesito una cuenta?", "No necesitas una cuenta para usar la herramienta gratuita actual. El inicio de sesión solo tendrá sentido cuando aporte un valor real, como preajustes guardados, acceso anticipado a Pro, historial opcional y flujos repetidos más rápidos."],
-    
   ],
 } as const;
 
