@@ -33,7 +33,15 @@ export const metadata: Metadata = {
       "Change your EPUB cover online free in seconds. Files never leave your device: no upload, no signup. Works on iPhone, Android and desktop.",
     images: ["https://epubcoverchanger.com/og-image.png"],
   },
-  alternates: { canonical: "https://epubcoverchanger.com" },
+  alternates: {
+    canonical: "https://epubcoverchanger.com",
+    languages: {
+      "x-default": "https://epubcoverchanger.com",
+      en: "https://epubcoverchanger.com",
+      "pt-BR": "https://epubcoverchanger.com/pt",
+      es: "https://epubcoverchanger.com/es",
+    },
+  },
 };
 
 const webApplicationSchema = {

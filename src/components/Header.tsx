@@ -4,17 +4,7 @@ import { BookOpen, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-
-const navLinks = [
-  { href: "/#how-it-works", label: "How it works", isAnchor: true },
-  {
-    href: "/blog/how-to-change-epub-cover",
-    label: "Blog",
-    isAnchor: false,
-  },
-  { href: "/pricing", label: "Pricing", isAnchor: false },
-  { href: "/about", label: "About", isAnchor: false },
-];
+import { useLocale } from "@/lib/i18n";
 
 function LogoWordmark() {
   return (
@@ -28,7 +18,15 @@ function LogoWordmark() {
 
 export default function Header() {
   const pathname = usePathname();
+  const { locale, t } = useLocale();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const homePath = locale === "pt" ? "/pt" : locale === "es" ? "/es" : "/";
+  const navLinks = [
+    { href: `${homePath}#how-it-works`, label: t("nav.howItWorks"), isAnchor: true },
+    { href: "/blog/how-to-change-epub-cover", label: t("nav.blog"), isAnchor: false },
+    { href: "/pricing", label: t("nav.pricing"), isAnchor: false },
+    { href: "/about", label: t("nav.about"), isAnchor: false },
+  ];
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
@@ -48,12 +46,12 @@ export default function Header() {
         <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-6">
           <div className="flex items-center">
             <Link
-              href="/"
+              href={homePath}
               className="flex shrink-0 items-center gap-2"
               onClick={(event) => {
-                if (pathname === "/") {
+                if (pathname === homePath) {
                   event.preventDefault();
-                  window.location.assign("/");
+                  window.location.assign(homePath);
                 }
               }}
             >
@@ -63,7 +61,7 @@ export default function Header() {
 
             <nav
               className="ml-12 hidden items-center gap-8 lg:flex"
-              aria-label="Main"
+              aria-label={t("nav.main")}
             >
               {navLinks.map((link) =>
                 link.isAnchor ? (
@@ -96,20 +94,20 @@ export default function Header() {
               href="/login"
               className="text-[15px] text-gray-600 hover:text-gray-900"
             >
-              Log in
+              {t("nav.login")}
             </Link>
             <Link
               href="/login"
               className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:border-gray-400 hover:bg-gray-50"
             >
-              Sign up
+              {t("nav.signup")}
             </Link>
           </div>
 
           <button
             type="button"
             className="lg:hidden"
-            aria-label="Open menu"
+            aria-label={t("nav.openMenu")}
             onClick={() => setMobileOpen(true)}
           >
             <Menu className="h-6 w-6 text-gray-700" />
@@ -122,16 +120,16 @@ export default function Header() {
           className="fixed inset-0 z-[60] bg-white transition-transform duration-300 ease-in-out lg:hidden"
           role="dialog"
           aria-modal="true"
-          aria-label="Mobile navigation"
+          aria-label={t("nav.mobile")}
         >
           <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
             <Link
-              href="/"
+              href={homePath}
               className="flex items-center gap-2"
               onClick={(event) => {
-                if (pathname === "/") {
+                if (pathname === homePath) {
                   event.preventDefault();
-                  window.location.assign("/");
+                  window.location.assign(homePath);
                 }
               }}
             >
@@ -140,7 +138,7 @@ export default function Header() {
             </Link>
             <button
               type="button"
-              aria-label="Close menu"
+              aria-label={t("nav.closeMenu")}
               onClick={() => setMobileOpen(false)}
             >
               <X className="h-6 w-6 text-gray-700" />
@@ -177,14 +175,14 @@ export default function Header() {
               className="rounded-lg border border-gray-300 px-4 py-3 text-center text-sm font-medium text-gray-700"
               onClick={() => setMobileOpen(false)}
             >
-              Log in
+              {t("nav.login")}
             </Link>
             <Link
               href="/login"
               className="rounded-lg bg-primary px-4 py-3 text-center text-sm font-semibold text-white"
               onClick={() => setMobileOpen(false)}
             >
-              Sign up
+              {t("nav.signup")}
             </Link>
           </div>
         </div>

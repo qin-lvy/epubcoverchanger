@@ -1,4 +1,7 @@
-﻿import Link from "next/link";
+﻿"use client";
+
+import Link from "next/link";
+import { useLocale } from "@/lib/i18n";
 
 type FooterLink =
   | {
@@ -17,60 +20,46 @@ type FooterColumn = {
   links: FooterLink[];
 };
 
-const footerColumns: FooterColumn[] = [
-  {
-    title: "Learn more",
-    links: [
-      { href: "/#how-it-works", label: "How it works", isAnchor: true },
-      {
-        href: "/blog/best-epub-cover-size",
-        label: "EPUB cover guide",
-        isAnchor: false,
-      },
-      {
-        href: "/blog/send-epub-to-kindle",
-        label: "Send EPUB to Kindle",
-        isAnchor: false,
-      },
-    ],
-  },
-  {
-    title: "Tools",
-    links: [
-      { href: "/", label: "Change EPUB cover", isAnchor: false },
-      {
-        label: "Batch processing",
-        comingSoon: true,
-      },
-    ],
-  },
-  {
-    title: "Support",
-    links: [
-      { href: "/#faq", label: "Help & FAQ", isAnchor: true },
-      { href: "/#feedback", label: "Send feedback", isAnchor: true },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      {
-        href: "/blog/how-to-change-epub-cover",
-        label: "Blog",
-        isAnchor: false,
-      },
-      { href: "/about", label: "About", isAnchor: false },
-      { href: "/pricing", label: "Pricing", isAnchor: false },
-    ],
-  },
-];
-
 export default function Footer() {
+  const { locale, t } = useLocale();
+  const homePath = locale === "pt" ? "/pt" : locale === "es" ? "/es" : "/";
+  const localizedColumns: FooterColumn[] = [
+    {
+      title: t("footer.learn"),
+      links: [
+        { href: `${homePath}#how-it-works`, label: t("nav.howItWorks"), isAnchor: true },
+        { href: "/blog/best-epub-cover-size", label: t("footer.guide"), isAnchor: false },
+        { href: "/blog/send-epub-to-kindle", label: t("footer.sendKindle"), isAnchor: false },
+      ],
+    },
+    {
+      title: t("footer.tools"),
+      links: [
+        { href: homePath, label: t("footer.changeCover"), isAnchor: false },
+        { label: t("footer.batch"), comingSoon: true },
+      ],
+    },
+    {
+      title: t("footer.support"),
+      links: [
+        { href: `${homePath}#faq`, label: t("footer.help"), isAnchor: true },
+        ...(locale === "en" ? [{ href: `${homePath}#feedback`, label: t("footer.feedback"), isAnchor: true }] : []),
+      ],
+    },
+    {
+      title: t("footer.company"),
+      links: [
+        { href: "/blog/how-to-change-epub-cover", label: t("nav.blog"), isAnchor: false },
+        { href: "/about", label: t("nav.about"), isAnchor: false },
+        { href: "/pricing", label: t("nav.pricing"), isAnchor: false },
+      ],
+    },
+  ];
   return (
     <footer>
       <div className="bg-gray-50 px-6 pt-16 pb-12">
         <div className="mx-auto grid max-w-[1280px] grid-cols-2 gap-8 md:grid-cols-4">
-          {footerColumns.map((column) => (
+          {localizedColumns.map((column) => (
             <div key={column.title}>
               <h3 className="mb-4 text-sm font-bold tracking-wider text-[#1F2937] uppercase">
                 {column.title}
@@ -83,7 +72,7 @@ export default function Footer() {
                         {link.label}
                         {" "}
                         <span className="ml-1 text-[11px] text-gray-400 italic">
-                          coming soon
+                          {t("footer.comingSoon")}
                         </span>
                       </span>
                     ) : link.isAnchor ? (
@@ -116,15 +105,22 @@ export default function Footer() {
           </p>
           <div className="flex items-center text-[13px] text-white/70">
             <Link href="/terms" className="hover:text-white">
-              Terms
+              {t("footer.terms")}
             </Link>
             <span className="mx-3">|</span>
             <Link href="/privacy" className="hover:text-white">
-              Privacy
+              {t("footer.privacy")}
             </Link>
             <span className="mx-3">|</span>
-            <Link href="/#feedback" className="hover:text-white">Feedback</Link>
+            <Link href={`${homePath}#feedback`} className="hover:text-white">{locale === "en" ? "Feedback" : t("footer.feedback")}</Link>
           </div>
+          <nav aria-label={t("nav.language")} className="flex items-center text-[13px] text-white/70">
+            <Link href="/" className={`hover:text-white ${locale === "en" ? "font-semibold text-white" : ""}`}>English</Link>
+            <span className="mx-2">|</span>
+            <Link href="/pt" className={`hover:text-white ${locale === "pt" ? "font-semibold text-white" : ""}`}>Português</Link>
+            <span className="mx-2">|</span>
+            <Link href="/es" className={`hover:text-white ${locale === "es" ? "font-semibold text-white" : ""}`}>Español</Link>
+          </nav>
         </div>
       </div>
     </footer>
