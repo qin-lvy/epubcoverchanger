@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useLocale } from "@/lib/i18n";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 function LogoWordmark() {
   return (
@@ -90,6 +91,7 @@ export default function Header() {
           </div>
 
           <div className="hidden items-center gap-4 lg:flex">
+            <LanguageSwitcher />
             <Link
               href="/login"
               className="text-[15px] text-gray-600 hover:text-gray-900"
@@ -104,14 +106,16 @@ export default function Header() {
             </Link>
           </div>
 
-          <button
-            type="button"
-            className="lg:hidden"
-            aria-label={t("nav.openMenu")}
-            onClick={() => setMobileOpen(true)}
-          >
-            <Menu className="h-6 w-6 text-gray-700" />
-          </button>
+          <div className="ml-3 flex shrink-0 items-center gap-3 lg:hidden">
+            <LanguageSwitcher />
+            <button
+              type="button"
+              aria-label={t("nav.openMenu")}
+              onClick={() => setMobileOpen(true)}
+            >
+              <Menu className="h-6 w-6 text-gray-700" />
+            </button>
+          </div>
         </div>
       </header>
 

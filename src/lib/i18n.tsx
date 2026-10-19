@@ -264,7 +264,7 @@ const messages: Record<Locale, Record<string, MessageValue>> = {
 };
 
 const englishMessages: Record<string, MessageValue> = {
-  "nav.howItWorks": "How it works", "nav.blog": "Blog", "nav.pricing": "Pricing", "nav.about": "About", "nav.login": "Log in", "nav.signup": "Sign up", "nav.openMenu": "Open menu", "nav.closeMenu": "Close menu", "nav.main": "Main", "nav.mobile": "Mobile navigation",
+  "nav.language": "Language", "nav.howItWorks": "How it works", "nav.blog": "Blog", "nav.pricing": "Pricing", "nav.about": "About", "nav.login": "Log in", "nav.signup": "Sign up", "nav.openMenu": "Open menu", "nav.closeMenu": "Close menu", "nav.main": "Main", "nav.mobile": "Mobile navigation",
   "hero.title": "Change your EPUB cover in seconds", "hero.auto": "100% Automatically and", "hero.free": "Free", "hero.private": "Files never leave your browser", "hero.preview": "Before / After preview slider", "hero.mobile": "Works on desktop and mobile", "hero.presets": "Platform-ready cover presets",
   "trust": "Processed locally in your browser - No server upload - Export dimensions shown before download",
   "uploader.epub": "Upload EPUB", "uploader.processing": "Processing...", "uploader.dropFile": "or drop a file", "uploader.epubHelp": "Single EPUB only · Max 100MB · Processed locally in your browser", "uploader.cover": "Upload New Cover", "uploader.dropImage": "or drop an image", "uploader.terms": "Terms of Service", "uploader.privacy": "Privacy Policy", "uploader.agreement": "By uploading a file you agree to our", "uploader.privacyLead": "To learn more about how we handle your personal data, check our",
