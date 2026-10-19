@@ -3,6 +3,7 @@
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
+import { useLocale } from "@/lib/i18n";
 
 interface EpubUploaderProps {
   onFileSelect: (file: File) => void;
@@ -13,6 +14,7 @@ export default function EpubUploader({
   onFileSelect,
   isLoading = false,
 }: EpubUploaderProps) {
+  const { t } = useLocale();
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragOver, setIsDragOver] = useState(false);
 
@@ -38,7 +40,7 @@ export default function EpubUploader({
       <div
         role="button"
         tabIndex={0}
-        aria-label="Upload EPUB file"
+        aria-label={t("uploader.epub")}
         className={`flex min-h-[320px] cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed px-8 py-12 text-center transition-[border-color,background,border-style] duration-200 ${
           isDragOver
             ? "border-solid border-primary bg-primary-light"
@@ -87,28 +89,28 @@ export default function EpubUploader({
           }}
         >
           {isLoading && <Loader2 className="h-5 w-5 animate-spin" />}
-          {isLoading ? "Processing..." : "Upload EPUB"}
+          {isLoading ? t("uploader.processing") : t("uploader.epub")}
         </button>
-        <p className="mt-3 text-sm text-gray-400">or drop a file</p>
+        <p className="mt-3 text-sm text-gray-400">{t("uploader.dropFile")}</p>
         <p className="mt-2 text-xs text-gray-400">
-          Single EPUB only · Max 100MB · Processed locally in your browser
+          {t("uploader.epubHelp")}
         </p>
       </div>
 
       <p className="mt-4 text-xs leading-relaxed text-gray-400">
-        By uploading a file you agree to our{" "}
+        {t("uploader.agreement")} {" "}
         <Link
           href="/terms"
           className="text-gray-400 underline hover:text-gray-500"
         >
-          Terms of Service
+          {t("uploader.terms")}
         </Link>
-        . To learn more about how we handle your personal data, check our{" "}
+        . {t("uploader.privacyLead")} {" "}
         <Link
           href="/privacy"
           className="text-gray-400 underline hover:text-gray-500"
         >
-          Privacy Policy
+          {t("uploader.privacy")}
         </Link>
         .
       </p>

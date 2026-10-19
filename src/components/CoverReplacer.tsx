@@ -29,6 +29,7 @@ import {
   type ImageDimensions,
 } from "@/lib/cover-sizes";
 import { captureToolEvent } from "@/lib/analytics";
+import { useLocale } from "@/lib/i18n";
 import {
   createWorkflowId,
   TOOL_FAILURE_EVENT,
@@ -44,16 +45,22 @@ import Toast from "./Toast";
 
 type ToolState = "initial" | "cover-select" | "preview";
 
+// English UI contract retained for the localized labels: "Output size" and
+// "Centered automatically. Adjust if needed."
+
 const MAX_EPUB_FILE_SIZE = 100 * 1024 * 1024;
 
-const PLACEHOLDER_BEFORE =
-  "data:image/svg+xml," +
-  encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" width="240" height="360" viewBox="0 0 240 360">
-      <rect width="240" height="360" fill="#E5E7EB"/>
-      <text x="120" y="180" text-anchor="middle" fill="#9CA3AF" font-family="sans-serif" font-size="14">No cover found</text>
-    </svg>`,
+function getPlaceholderBefore(label: string) {
+  return (
+    "data:image/svg+xml," +
+    encodeURIComponent(
+      `<svg xmlns="http://www.w3.org/2000/svg" width="240" height="360" viewBox="0 0 240 360">
+        <rect width="240" height="360" fill="#E5E7EB"/>
+        <text x="120" y="180" text-anchor="middle" fill="#9CA3AF" font-family="sans-serif" font-size="14">${label}</text>
+      </svg>`,
+    )
   );
+}
 
 function revokeObjectUrl(url: string | null, preservedUrl?: string | null) {
   if (url && url !== preservedUrl && url.startsWith("blob:")) {
@@ -62,15 +69,16 @@ function revokeObjectUrl(url: string | null, preservedUrl?: string | null) {
 }
 
 function HeroLeft() {
+  const { t } = useLocale();
   return (
     <div className="flex-1 max-lg:mt-6">
       <h1 className="mb-4 text-[32px] leading-[1.1] font-extrabold text-[#111827] lg:text-[48px]">
-        Change your EPUB cover in seconds
+        {t("hero.title")}
       </h1>
       <p className="mb-8 text-base text-[#374151] lg:text-xl">
-        100% Automatically and{" "}
+        {t("hero.auto")} {" "}
         <span className="ml-1.5 inline-block rounded-md bg-primary px-3 py-0.5 text-base font-bold text-white">
-          Free
+          {t("hero.free")}
         </span>
       </p>
       <ul className="flex flex-col gap-4">
@@ -79,7 +87,7 @@ function HeroLeft() {
             <Shield className="h-5 w-5 text-success" />
           </span>
           <span className="ml-3 text-[15px] font-medium text-[#1F2937]">
-            Files never leave your browser
+            {t("hero.private")}
           </span>
         </li>
         <li className="flex items-center">
@@ -87,7 +95,7 @@ function HeroLeft() {
             <ArrowLeftRight className="h-5 w-5 text-primary" />
           </span>
           <span className="ml-3 text-[15px] font-medium text-[#1F2937]">
-            Before / After preview slider
+            {t("hero.preview")}
           </span>
         </li>
         <li className="flex items-center">
@@ -95,13 +103,13 @@ function HeroLeft() {
             <Smartphone className="h-5 w-5 text-accent" />
           </span>
           <span className="ml-3 text-[15px] font-medium text-[#1F2937]">
-            Works on desktop and mobile
+            {t("hero.mobile")}
           </span>
         </li>
       </ul>
       <div className="mt-8">
         <p className="mb-3 text-sm font-semibold tracking-wide text-gray-500 uppercase">
-          Platform-ready cover presets
+          {t("hero.presets")}
         </p>
         <div className="flex flex-wrap gap-3">
           {[
@@ -131,6 +139,7 @@ function HeroLeft() {
 }
 
 export default function CoverReplacer() {
+  const { t } = useLocale();
   const [workflowId, setWorkflowId] = useState<string | null>(null);
   const [state, setState] = useState<ToolState>("initial");
   const [isProcessingEpub, setIsProcessingEpub] = useState(false);
@@ -213,7 +222,7 @@ export default function CoverReplacer() {
           stage: "epub_validation",
           reason: "invalid_file_type",
         });
-        showToast("Please upload a valid .epub file");
+        showToast(t("error.invalidEpub"));
         return;
       }
       if (file.size > MAX_EPUB_FILE_SIZE) {
@@ -222,7 +231,7 @@ export default function CoverReplacer() {
           stage: "epub_validation",
           reason: "file_too_large",
         });
-        showToast("This EPUB is too large. Please use a file under 100MB.");
+        showToast(t("error.epubLarge"));
         return;
       }
 
@@ -237,7 +246,7 @@ export default function CoverReplacer() {
             reason: "drm_protected",
           });
           showToast(
-            "This EPUB is DRM-protected and cannot be edited. DRM-free files work perfectly.",
+            t("error.drm"),
           );
           setIsProcessingEpub(false);
           return;
@@ -267,7 +276,7 @@ export default function CoverReplacer() {
           setBeforeImageUrl(null);
           setBeforeImageDimensions(null);
           showToast(
-            "No cover image found in this EPUB. You can still add one by uploading your cover image.",
+            t("error.noCover"),
           );
         }
 
@@ -283,13 +292,13 @@ export default function CoverReplacer() {
           reason: "parse_error",
         });
         showToast(
-          "This file appears to be corrupted. Please try another EPUB.",
+          t("error.corrupt"),
         );
       } finally {
         setIsProcessingEpub(false);
       }
     },
-    [afterImageUrl, beforeImageUrl, exportedCoverFile, showToast],
+    [afterImageUrl, beforeImageUrl, exportedCoverFile, showToast, t],
   );
 
   const handleCoverSelect = useCallback(
@@ -302,7 +311,7 @@ export default function CoverReplacer() {
             reason: "invalid_file_type",
           });
         }
-        showToast("Please upload an image file (JPG, PNG, or WebP)");
+        showToast(t("error.invalidImage"));
         return;
       }
       if (isCoverTooLarge(file)) {
@@ -313,7 +322,7 @@ export default function CoverReplacer() {
             reason: "file_too_large",
           });
         }
-        showToast("Cover image is too large. Please use an image under 10MB.");
+        showToast(t("error.imageLarge"));
         return;
       }
 
@@ -366,10 +375,10 @@ export default function CoverReplacer() {
             reason: "image_load_error",
           });
         }
-        showToast("Failed to load image. Please try another file.");
+        showToast(t("error.imageLoad"));
       }
     },
-    [afterImageUrl, showToast, selectedSize, uploadedCoverPreviewUrl, workflowId],
+    [afterImageUrl, showToast, selectedSize, t, uploadedCoverPreviewUrl, workflowId],
   );
 
   const handleCropConfirm = useCallback(
@@ -402,7 +411,7 @@ export default function CoverReplacer() {
     setPendingCoverFile(null);
   }, []);
 
-  const beforeForSlider = beforeImageUrl ?? PLACEHOLDER_BEFORE;
+  const beforeForSlider = beforeImageUrl ?? getPlaceholderBefore(t("error.noCover"));
   const activeTargetDimensions =
     uploadedCoverDimensions && selectedSize.width === 0
       ? uploadedCoverDimensions
@@ -423,7 +432,7 @@ export default function CoverReplacer() {
       <section className="bg-gray-50 px-6 py-12 lg:px-6 lg:py-20">
         <div className="mx-auto max-w-[1280px]">
           <h2 className="mb-6 text-center text-2xl font-bold text-gray-800">
-            Preview your new cover
+            {t("preview.title")}
           </h2>
 
           <BeforeAfterSlider
@@ -436,7 +445,7 @@ export default function CoverReplacer() {
           <div className="mx-auto mt-4 grid max-w-[760px] gap-3 rounded-2xl border border-gray-200 bg-white p-4 text-sm text-gray-600 shadow-[0_1px_3px_rgba(0,0,0,0.04)] sm:grid-cols-2">
             <div>
               <p className="text-xs font-semibold tracking-wide text-gray-400 uppercase">
-                Original EPUB cover
+                {t("preview.original")}
               </p>
               <p className="mt-1 font-semibold text-gray-800">
                 {formatDimensions(beforeImageDimensions)}
@@ -444,7 +453,7 @@ export default function CoverReplacer() {
             </div>
             <div>
               <p className="text-xs font-semibold tracking-wide text-gray-400 uppercase">
-                New exported cover
+                {t("preview.new")}
               </p>
               <p className="mt-1 font-semibold text-gray-800">
                 {formatDimensions(exportedCoverDimensions)} ·{" "}
@@ -495,7 +504,7 @@ export default function CoverReplacer() {
               onClick={handleChangeEpub}
               className="cursor-pointer text-sm text-primary hover:text-primary-hover"
             >
-              Change EPUB
+                {t("preview.changeEpub")}
             </button>
             <button
               type="button"
@@ -515,14 +524,14 @@ export default function CoverReplacer() {
               }}
               className="cursor-pointer text-sm text-primary hover:text-primary-hover"
             >
-              Change Cover
+                {t("preview.changeCover")}
             </button>
             <button
               type="button"
               onClick={resetAll}
               className="cursor-pointer text-sm text-primary hover:text-primary-hover"
             >
-              Start Over
+                {t("preview.startOver")}
             </button>
           </div>
         </div>
@@ -550,17 +559,17 @@ export default function CoverReplacer() {
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={beforeImageUrl}
-                  alt="Current cover"
+                  alt={t("preview.original")}
                   className="max-h-full max-w-full object-contain"
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-gray-200 text-sm text-gray-400">
-                  No cover found
+                  {t("error.noCover")}
                 </div>
               )}
               </div>
               <p className="text-center text-xs text-gray-500">
-                Original cover · {formatDimensions(beforeImageDimensions)}
+                {t("preview.original")} · {formatDimensions(beforeImageDimensions)}
               </p>
             </div>
 
@@ -573,7 +582,7 @@ export default function CoverReplacer() {
               <div className="w-full max-w-[480px] rounded-2xl bg-white p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_1px_2px_rgba(0,0,0,0.02)] max-lg:max-w-full max-lg:p-6">
                 <div className="mb-4">
                   <label className="mb-2 block text-xs font-semibold tracking-wide text-gray-500 uppercase">
-                    Output size
+                    {t("size.output")}
                   </label>
                   <select
                     value={selectedSize.id}
@@ -633,7 +642,7 @@ export default function CoverReplacer() {
               className="flex cursor-pointer items-center gap-1 text-sm text-primary hover:text-primary-hover"
             >
               <RefreshCw className="h-3.5 w-3.5" />
-              Change file
+              {t("preview.changeEpub")}
             </button>
           </div>
         </div>

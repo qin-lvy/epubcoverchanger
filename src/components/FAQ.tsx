@@ -3,18 +3,21 @@
 import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
 import { faqItems } from "@/lib/faq-data";
+import { getFaqMessages, useLocale } from "@/lib/i18n";
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const { locale, t } = useLocale();
+  const localizedItems = locale === "en" ? faqItems : getFaqMessages(locale);
 
   return (
     <section id="faq" className="bg-white px-6 py-12 lg:py-20">
       <div className="mx-auto max-w-[768px]">
         <h2 className="mb-10 text-center text-[36px] font-extrabold text-[#111827]">
-          Frequently asked questions
+          {t("faq.title")}
         </h2>
         <div>
-          {faqItems.map((item, index) => {
+          {localizedItems.map((item, index) => {
             const isOpen = openIndex === index;
             return (
               <div

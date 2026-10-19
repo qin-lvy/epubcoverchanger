@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  experimental: {
+    // Needed because each language has its own root layout.
+    globalNotFound: true,
+  },
 };
 
 export default nextConfig;

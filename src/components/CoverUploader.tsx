@@ -2,6 +2,7 @@
 
 import { Loader2 } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
+import { useLocale } from "@/lib/i18n";
 
 interface CoverUploaderProps {
   onFileSelect: (file: File) => void;
@@ -12,6 +13,7 @@ export default function CoverUploader({
   onFileSelect,
   isLoading = false,
 }: CoverUploaderProps) {
+  const { t } = useLocale();
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragOver, setIsDragOver] = useState(false);
 
@@ -41,7 +43,7 @@ export default function CoverUploader({
       }`}
       role="button"
       tabIndex={0}
-      aria-label="Upload new cover image"
+      aria-label={t("uploader.cover")}
       onClick={() => !isLoading && inputRef.current?.click()}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -84,9 +86,9 @@ export default function CoverUploader({
         }}
       >
         {isLoading && <Loader2 className="h-5 w-5 animate-spin" />}
-        {isLoading ? "Processing..." : "Upload New Cover"}
+        {isLoading ? t("uploader.processing") : t("uploader.cover")}
       </button>
-      <p className="mt-3 text-sm text-gray-400">or drop an image</p>
+      <p className="mt-3 text-sm text-gray-400">{t("uploader.dropImage")}</p>
       <p className="mt-1 text-xs text-gray-400">.jpg .png .webp</p>
     </div>
   );

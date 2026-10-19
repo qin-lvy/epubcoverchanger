@@ -14,6 +14,7 @@ import {
   saveGeneratedEpub,
 } from "@/lib/epub";
 import { captureToolEvent } from "@/lib/analytics";
+import { useLocale } from "@/lib/i18n";
 import {
   TOOL_FAILURE_EVENT,
   TOOL_FUNNEL_EVENTS,
@@ -28,6 +29,9 @@ interface DownloadButtonProps {
   workflowId?: string;
   onError?: (message: string) => void;
 }
+
+// English copy is retained here as the contract for the localized labels:
+// "Save or Open EPUB" and "On iPhone, choose Save to Files or open it in Apple Books from the system panel."
 
 function isIosDevice() {
   if (typeof navigator === "undefined") return false;
@@ -61,6 +65,7 @@ export default function DownloadButton({
   workflowId,
   onError,
 }: DownloadButtonProps) {
+  const { t } = useLocale();
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedFile, setGeneratedFile] = useState<File | null>(null);
   const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
@@ -100,7 +105,7 @@ export default function DownloadButton({
           reason: "generation_error",
         });
       }
-      onError?.(result.error ?? "EPUB generation failed. Please try again.");
+      onError?.(result.error ?? t("error.epubGeneration"));
       return;
     }
 
@@ -111,21 +116,22 @@ export default function DownloadButton({
     }
 
     if (isIosDevice()) {
-      setSaveMessage("Your EPUB is ready. Tap Save or Open EPUB below.");
+      setSaveMessage(t("download.ready"));
       return;
     }
 
     try {
       await saveGeneratedEpub(result.file);
-      setSaveMessage(`Your EPUB was generated. Download started: ${result.file.name}`);
+      setSaveMessage(t("download.started", result.file.name));
     } catch {
-      setSaveMessage("Your EPUB is ready. Use one of the save options below.");
+      setSaveMessage(t("download.options"));
     }
   }, [
     coverPath,
     newCoverFile,
     onError,
     originalFileName,
+    t,
     workflowId,
     zip,
   ]);
@@ -140,22 +146,22 @@ export default function DownloadButton({
         title: generatedFile.name,
       });
       setSaveMessage(
-        "The system panel closed. Check Files or Apple Books, depending on what you chose.",
+        t("download.shareClosed"),
       );
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
       setSaveMessage(
-        "The system save panel was unavailable. Please try Save or Open EPUB again.",
+        t("download.shareUnavailable"),
       );
     }
-  }, [captureSaveClick, generatedFile]);
+  }, [captureSaveClick, generatedFile, t]);
 
   const handleDirectSave = useCallback(() => {
     captureSaveClick();
     setSaveMessage(
-      "Save requested. Check your browser downloads or the Files app.",
+      t("download.saveRequested"),
     );
-  }, [captureSaveClick]);
+  }, [captureSaveClick, t]);
 
   if (generatedFile && generatedUrl) {
     const shareSupported = canShareFile(generatedFile);
@@ -168,7 +174,7 @@ export default function DownloadButton({
       >
         <div className="flex items-center justify-center gap-2 font-semibold text-green-800">
           <CheckCircle2 className="h-5 w-5" />
-          EPUB generated successfully
+          {t("download.generated")}
         </div>
         <p className="mt-1 break-all text-sm text-green-700">
           {generatedFile.name}
@@ -185,7 +191,7 @@ export default function DownloadButton({
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-white hover:bg-primary-hover"
             >
               <Share2 className="h-4 w-4" />
-              Save or Open EPUB
+              {t("download.saveOpen")}
             </button>
           )}
           {showLinkFallbacks && (
@@ -199,7 +205,7 @@ export default function DownloadButton({
                 className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50"
               >
                 <Download className="h-4 w-4" />
-                Direct download
+                {t("download.direct")}
               </a>
               <a
                 href={generatedUrl}
@@ -209,14 +215,14 @@ export default function DownloadButton({
                 className="inline-flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-primary hover:text-primary-hover"
               >
                 <ExternalLink className="h-4 w-4" />
-                Open file
+                {t("download.open")}
               </a>
             </>
           )}
         </div>
 
         <p className="mt-3 text-xs text-gray-600">
-          On iPhone, choose Save to Files or open it in Apple Books from the system panel.
+          {t("download.iphone")}
         </p>
       </div>
     );
@@ -235,11 +241,11 @@ export default function DownloadButton({
         ) : (
           <Download className="h-5 w-5" />
         )}
-        {isGenerating ? "Generating EPUB..." : "Download Updated EPUB"}
+        {isGenerating ? t("download.generating") : t("download.button")}
       </button>
 
       <p className="mt-3 text-center text-sm text-gray-400">
-        Free for single EPUB cover changes. Pro workflow features are coming later.
+        {t("download.freeNote")}
       </p>
     </>
   );

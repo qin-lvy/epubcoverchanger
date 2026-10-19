@@ -16,6 +16,7 @@ import {
   type CoverTransform,
   type ImageDimensions,
 } from "@/lib/cover-sizes";
+import { useLocale } from "@/lib/i18n";
 
 interface CoverCropEditorProps {
   imageFile: File;
@@ -34,18 +35,10 @@ interface CoverCropEditorProps {
 
 type EditorFitMode = Exclude<CoverFitMode, "original">;
 
-const EDITOR_FIT_MODES: EditorFitMode[] = ["fit", "fill"];
+// English UI contract retained for the localized labels: "Review your cover position",
+// "Centered automatically. Adjust if needed.", and "Output size".
 
-const MODE_COPY: Record<EditorFitMode, { label: string; helper: string }> = {
-  fit: {
-    label: "Fit entire image",
-    helper: "Keeps every pixel visible; empty space is filled with background.",
-  },
-  fill: {
-    label: "Fill cover",
-    helper: "Fills the cover edge to edge; some image edges may be cropped.",
-  },
-};
+const EDITOR_FIT_MODES: EditorFitMode[] = ["fit", "fill"];
 
 function constrainTransform(
   transform: CoverTransform,
@@ -84,6 +77,7 @@ export default function CoverCropEditor({
   onCropConfirm,
   onCancel,
 }: CoverCropEditorProps) {
+  const { t } = useLocale();
   const containerRef = useRef<HTMLDivElement>(null);
   const dragStart = useRef({ x: 0, y: 0, posX: 0, posY: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -287,13 +281,13 @@ export default function CoverCropEditor({
       <div className="mb-4 text-center">
         <div className="flex items-center justify-center gap-2 text-sm font-medium text-gray-700">
           <Move className="h-4 w-4" />
-          <span>Review your cover position</span>
+          <span>{t("crop.review")}</span>
         </div>
         <p className="mt-1 text-xs text-gray-600">
-          Centered automatically. Adjust if needed.
+          {t("crop.centered")}
         </p>
         <p className="mt-1 text-xs text-gray-500">
-          {targetLabel}: {targetWidth} x {targetHeight}px · Source:{" "}
+          {targetLabel}: {targetWidth} x {targetHeight}px · {t("crop.source")}{" "}
           {formatDimensions(imageDimensions)}
         </p>
       </div>
@@ -319,7 +313,7 @@ export default function CoverCropEditor({
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={imagePreviewUrl}
-                alt="Cover positioning preview"
+                alt={t("crop.preview")}
                 draggable={false}
                 className="pointer-events-none absolute max-w-none select-none"
                 style={{
@@ -342,7 +336,7 @@ export default function CoverCropEditor({
         <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
           <div>
             <p className="mb-2 text-xs font-semibold tracking-wide text-gray-500 uppercase">
-              Fit mode
+              {t("crop.fitMode")}
             </p>
             <div className="grid gap-2">
               {EDITOR_FIT_MODES.map((mode) => (
@@ -357,10 +351,10 @@ export default function CoverCropEditor({
                   }`}
                 >
                   <span className="block text-sm font-semibold">
-                    {MODE_COPY[mode].label}
+                    {mode === "fit" ? t("crop.fit") : t("crop.fill")}
                   </span>
                   <span className="mt-0.5 block text-xs text-gray-500">
-                    {MODE_COPY[mode].helper}
+                    {mode === "fit" ? t("crop.fitHelp") : t("crop.fillHelp")}
                   </span>
                 </button>
               ))}
@@ -371,7 +365,7 @@ export default function CoverCropEditor({
             <>
               <div className="mt-4">
                 <label className="flex items-center justify-between text-xs font-semibold tracking-wide text-gray-500 uppercase">
-                  <span>Zoom</span>
+                  <span>{t("crop.zoom")}</span>
                   <span>{Math.round((transform.scale / fitScale) * 100)}%</span>
                 </label>
                 <input
@@ -387,7 +381,7 @@ export default function CoverCropEditor({
 
               <div className="mt-4">
                 <p className="mb-2 text-xs font-semibold tracking-wide text-gray-500 uppercase">
-                  Background
+                  {t("crop.background")}
                 </p>
                 <div className="flex gap-2">
                   {(["white", "light-gray", "black"] as CoverBackground[]).map(
@@ -406,7 +400,7 @@ export default function CoverCropEditor({
                           color: background === "black" ? "#FFFFFF" : "#111827",
                         }}
                       >
-                        {background === "light-gray" ? "Gray" : background}
+                        {background === "light-gray" ? t("crop.gray") : background === "white" ? t("color.white") : t("color.black")}
                       </button>
                     ),
                   )}
@@ -419,17 +413,17 @@ export default function CoverCropEditor({
             <p className="flex gap-2">
               <ImageIcon className="mt-0.5 h-3.5 w-3.5 shrink-0" />
               <span>
-                We never stretch your image. Fit may add background; Fill may crop.
+                {t("crop.neverStretch")}
               </span>
             </p>
             {ratioMismatch && transform.mode === "fill" && (
               <p className="font-medium text-amber-700">
-                Fill mode will crop because this image has a different ratio.
+                {t("crop.fillCrop")}
               </p>
             )}
             {willUpscale && (
               <p className="font-medium text-amber-700">
-                This image is smaller than the selected output size, so sharpness may not improve.
+                {t("crop.upscale")}
               </p>
             )}
           </div>
@@ -441,14 +435,14 @@ export default function CoverCropEditor({
               className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
               <RotateCcw className="h-4 w-4" />
-              Reset
+              {t("crop.reset")}
             </button>
             <button
               type="button"
               onClick={onCancel}
               className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
-              Cancel
+              {t("crop.cancel")}
             </button>
             <button
               type="button"
@@ -457,7 +451,7 @@ export default function CoverCropEditor({
               className="inline-flex flex-[2] items-center justify-center gap-2 rounded-lg bg-[#2563EB] px-4 py-2 text-sm font-semibold text-white hover:bg-[#1D4ED8] disabled:opacity-70"
             >
               <Check className="h-4 w-4" />
-              {isConfirming ? "Exporting..." : "Confirm Cover"}
+              {isConfirming ? t("crop.exporting") : t("crop.confirm")}
             </button>
           </div>
         </div>

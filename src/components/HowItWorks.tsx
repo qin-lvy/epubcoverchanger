@@ -1,5 +1,8 @@
+"use client";
+
 import { ChevronDown, ChevronRight, Download, Image, Upload } from "lucide-react";
 import { Fragment } from "react";
+import { useLocale } from "@/lib/i18n";
 
 const steps = [
   {
@@ -58,14 +61,20 @@ function StepConnector({ direction }: { direction: "horizontal" | "vertical" }) 
 }
 
 export default function HowItWorks() {
+  const { t } = useLocale();
+  const localizedSteps = [
+    { ...steps[0], title: t("how.uploadTitle"), description: t("how.uploadDescription") },
+    { ...steps[1], title: t("how.coverTitle"), description: t("how.coverDescription") },
+    { ...steps[2], title: t("how.downloadTitle"), description: t("how.downloadDescription") },
+  ];
   return (
     <section id="how-it-works" className="bg-gray-50 px-6 py-12 lg:py-20">
       <div className="mx-auto max-w-[1280px]">
         <h2 className="mb-12 text-center text-[36px] font-extrabold text-[#111827]">
-          How it works
+          {t("how.title")}
         </h2>
         <div className="mx-auto flex max-w-[960px] flex-col items-stretch md:flex-row md:items-start md:justify-center">
-          {steps.map((step, index) => (
+          {localizedSteps.map((step, index) => (
             <Fragment key={step.title}>
               <div className="flex-1 text-center">
                 <div className="mx-auto mb-3 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
