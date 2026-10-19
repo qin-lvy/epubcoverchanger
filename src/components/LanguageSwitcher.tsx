@@ -1,18 +1,21 @@
 "use client";
 
 import { Check, ChevronDown, Globe } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useLocale } from "@/lib/i18n";
+import { counterpartPath } from "@/lib/localized-routes";
 
 const LANGUAGES = [
-  { locale: "en", href: "/", short: "EN", label: "English", hrefLang: "en" },
-  { locale: "pt", href: "/pt", short: "PT", label: "Português (Brasil)", hrefLang: "pt-BR" },
-  { locale: "es", href: "/es", short: "ES", label: "Español", hrefLang: "es" },
+  { locale: "en", short: "EN", label: "English", hrefLang: "en" },
+  { locale: "pt", short: "PT", label: "Português (Brasil)", hrefLang: "pt-BR" },
+  { locale: "es", short: "ES", label: "Español", hrefLang: "es" },
 ] as const;
 
 /** Visible language picker for the header, on desktop and mobile. */
 export default function LanguageSwitcher() {
   const { locale, t } = useLocale();
+  const pathname = usePathname();
   const detailsRef = useRef<HTMLDetailsElement>(null);
   const current = LANGUAGES.find((language) => language.locale === locale) ?? LANGUAGES[0];
 
@@ -41,7 +44,7 @@ export default function LanguageSwitcher() {
         {LANGUAGES.map((language) => (
           <li key={language.locale}>
             <a
-              href={language.href}
+              href={counterpartPath(pathname, language.locale)}
               hrefLang={language.hrefLang}
               lang={language.hrefLang}
               aria-current={language.locale === locale ? "true" : undefined}

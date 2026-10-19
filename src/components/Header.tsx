@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useLocale } from "@/lib/i18n";
+import { localizedRoutes } from "@/lib/localized-routes";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 function LogoWordmark() {
@@ -24,7 +25,7 @@ export default function Header() {
   const homePath = locale === "pt" ? "/pt" : locale === "es" ? "/es" : "/";
   const navLinks = [
     { href: `${homePath}#how-it-works`, label: t("nav.howItWorks"), isAnchor: true },
-    { href: "/blog/how-to-change-epub-cover", label: t("nav.blog"), isAnchor: false },
+    { href: localizedRoutes.changeCover[locale], label: t("nav.blog"), isAnchor: false },
     { href: "/pricing", label: t("nav.pricing"), isAnchor: false },
     { href: "/about", label: t("nav.about"), isAnchor: false },
   ];
