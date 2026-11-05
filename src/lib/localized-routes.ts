@@ -1,6 +1,7 @@
 export type SiteLocale = "en" | "pt" | "es";
 
 export const siteUrl = "https://epubcoverchanger.com";
+export const contactEmail = "hello@epubcoverchanger.com";
 
 /** Every page that exists in all three languages, keyed by a stable id. */
 export const localizedRoutes = {

@@ -120,6 +120,7 @@ const messages: Record<Locale, Record<string, MessageValue>> = {
     "footer.comingSoon": "em breve",
     "footer.help": "Ajuda e FAQ",
     "footer.feedback": "Enviar feedback",
+    "footer.contact": "Contato",
     "footer.terms": "Termos",
     "footer.privacy": "Privacidade",
     "faq.1.q": "Como trocar a capa de um arquivo EPUB?",
@@ -246,6 +247,7 @@ const messages: Record<Locale, Record<string, MessageValue>> = {
     "footer.comingSoon": "próximamente",
     "footer.help": "Ayuda y preguntas frecuentes",
     "footer.feedback": "Enviar comentarios",
+    "footer.contact": "Contacto",
     "footer.terms": "Términos",
     "footer.privacy": "Privacidad",
     "faq.1.q": "¿Cómo cambio la portada de un archivo EPUB?",
@@ -276,7 +278,7 @@ const englishMessages: Record<string, MessageValue> = {
   "preview.title": "Preview your new cover", "preview.original": "Original EPUB cover", "preview.new": "New exported cover", "preview.changeEpub": "Change EPUB", "preview.changeCover": "Change Cover", "preview.startOver": "Start Over",
   "download.generated": "EPUB generated successfully", "download.ready": "Your EPUB is ready. Tap Save or Open EPUB below.", "download.started": ((name: string) => `Your EPUB was generated. Download started: ${name}`), "download.options": "Your EPUB is ready. Use one of the save options below.", "download.shareClosed": "The system panel closed. Check Files or Apple Books, depending on what you chose.", "download.shareUnavailable": "The system save panel was unavailable. Please try Save or Open EPUB again.", "download.saveRequested": "Save requested. Check your browser downloads or the Files app.", "download.saveOpen": "Save or Open EPUB", "download.direct": "Direct download", "download.open": "Open file", "download.iphone": "On iPhone, choose Save to Files or open it in Apple Books from the system panel.", "download.generating": "Generating EPUB...", "download.button": "Download Updated EPUB", "download.freeNote": "Free for single EPUB cover changes. Pro workflow features are coming later.",
   "error.invalidEpub": "Please upload a valid .epub file", "error.epubLarge": "This EPUB is too large. Please use a file under 100MB.", "error.drm": "This EPUB is DRM-protected and cannot be edited. DRM-free files work perfectly.", "error.noCover": "No cover image found in this EPUB. You can still add one by uploading your cover image.", "error.corrupt": "This file appears to be corrupted. Please try another EPUB.", "error.invalidImage": "Please upload an image file (JPG, PNG, or WebP)", "error.imageLarge": "Cover image is too large. Please use an image under 10MB.", "error.imageLoad": "Failed to load image. Please try another file.", "error.epubGeneration": "EPUB generation failed. Please try again.",
-  "faq.title": "Frequently asked questions", "footer.learn": "Learn more", "footer.tools": "Tools", "footer.support": "Support", "footer.company": "Company", "footer.guide": "EPUB cover guide", "footer.sendKindle": "Send EPUB to Kindle", "footer.changeCover": "Change EPUB cover", "footer.batch": "Batch processing", "footer.comingSoon": "coming soon", "footer.help": "Help & FAQ", "footer.feedback": "Send feedback", "footer.terms": "Terms", "footer.privacy": "Privacy",
+  "faq.title": "Frequently asked questions", "footer.learn": "Learn more", "footer.tools": "Tools", "footer.support": "Support", "footer.company": "Company", "footer.guide": "EPUB cover guide", "footer.sendKindle": "Send EPUB to Kindle", "footer.changeCover": "Change EPUB cover", "footer.batch": "Batch processing", "footer.comingSoon": "coming soon", "footer.help": "Help & FAQ", "footer.feedback": "Send feedback", "footer.contact": "Contact", "footer.terms": "Terms", "footer.privacy": "Privacy",
 };
 
 const LocaleContext = createContext<Locale>("en");
