@@ -122,7 +122,11 @@ export default function HowToChangeEpubCoverPage() {
             no cover image we could detect, and 91 of the 195 people ran into at
             least one such file. Fanfiction downloads are a typical case: EPUBs
             downloaded from AO3 come without a cover image
-            <Cite n={2} />.
+            <Cite n={2} />. See{" "}
+            <Link href="/blog/add-cover-to-epub" className="text-primary hover:underline">
+              how to add a cover to an EPUB
+            </Link>
+            .
           </li>
           <li>
             <strong>The cover is declared in only one of the two standard ways.</strong>{" "}
