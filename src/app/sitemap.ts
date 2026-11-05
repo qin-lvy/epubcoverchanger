@@ -10,6 +10,7 @@ const routes = [
   { path: "/blog/how-to-change-epub-cover", priority: 0.8, changeFrequency: "monthly" as const },
   { path: "/blog/best-epub-cover-size", priority: 0.8, changeFrequency: "monthly" as const },
   { path: "/blog/send-epub-to-kindle", priority: 0.8, changeFrequency: "monthly" as const },
+  { path: "/blog/add-cover-to-epub", priority: 0.8, changeFrequency: "monthly" as const },
   { path: "/pt/blog/trocar-capa-epub-kindle", priority: 0.7, changeFrequency: "monthly" as const },
   { path: "/pt/blog/tamanho-capa-epub", priority: 0.7, changeFrequency: "monthly" as const },
   { path: "/pt/blog/enviar-epub-para-kindle", priority: 0.7, changeFrequency: "monthly" as const },

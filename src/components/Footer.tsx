@@ -33,6 +33,7 @@ export default function Footer() {
         { href: `${homePath}#how-it-works`, label: t("nav.howItWorks"), isAnchor: true },
         { href: localizedRoutes.coverSize[locale], label: t("footer.guide"), isAnchor: false },
         { href: localizedRoutes.sendToKindle[locale], label: t("footer.sendKindle"), isAnchor: false },
+        ...(locale === "en" ? [{ href: "/blog/add-cover-to-epub", label: "Add a cover to an EPUB", isAnchor: false }] : []),
       ],
     },
     {

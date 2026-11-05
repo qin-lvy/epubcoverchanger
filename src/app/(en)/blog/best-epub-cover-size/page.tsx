@@ -80,7 +80,7 @@ const articleSchema = {
   headline: "EPUB cover size for Kindle, Kobo, Apple Books and Google Play",
   description,
   url: pageUrl,
-  dateModified: "2026-10-21",
+  dateModified: "2026-11-05",
   author: { "@type": "Organization", name: "EpubCoverChanger.com", url: "https://epubcoverchanger.com" },
   publisher: { "@type": "Organization", name: "EpubCoverChanger.com", url: "https://epubcoverchanger.com" },
 };
@@ -102,7 +102,7 @@ export default function BestEpubCoverSizePage() {
         EPUB cover size for Kindle, Kobo, Apple Books and Google Play
       </h1>
       <p className="mt-4 text-sm text-gray-500">
-        Last updated: October 2026 · By the EpubCoverChanger.com team
+        Last updated: November 2026 · By the EpubCoverChanger.com team
       </p>
 
       <div className="mt-8 rounded-3xl border border-blue-100 bg-blue-50 p-6">
@@ -186,8 +186,10 @@ export default function BestEpubCoverSizePage() {
         <h2 className={h2}>Quality rule</h2>
         <p>
           Start from the largest original image you have. Resizing a small image
-          up to 1600 x 2560 makes the file bigger but adds no detail, and Apple
-          explicitly rejects upscaled covers
+          up to 1600 x 2560 makes the file bigger but adds no detail. Apple
+          asks publishers not to upscale a smaller image to meet its size
+          requirement, and it rejects covers that are excessively blurry or
+          pixelated
           <Cite n={2} />.
         </p>
       </section>
