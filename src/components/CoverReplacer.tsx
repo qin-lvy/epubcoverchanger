@@ -377,7 +377,8 @@ export default function CoverReplacer() {
             stage: "cover_prepare",
             reason: "image_load_error",
             image_type: selectedFile.type,
-            detected_format: loadError?.detectedFormat ?? "unknown",
+            // Errors thrown after the image loaded are not decode failures; keep them apart.
+            detected_format: loadError?.detectedFormat ?? "other_error",
             file_readable: loadError?.fileReadable ?? true,
             size_bucket: sizeBucket(selectedFile.size),
             os_family: getOsFamily(window.navigator.userAgent, window.navigator.maxTouchPoints),
