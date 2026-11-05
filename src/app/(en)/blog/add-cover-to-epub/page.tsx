@@ -4,6 +4,7 @@ import { Cite, SourceList, type BlogSource } from "@/components/BlogSources";
 import { siteUrl } from "@/lib/localized-routes";
 
 const pageUrl = `${siteUrl}/blog/add-cover-to-epub`;
+const heroImage = `${siteUrl}/blog/add-cover-to-epub-tool.jpg`;
 const title = "How to Add a Cover to an EPUB File (Free, Online)";
 const description =
   "Add a cover to an EPUB that has none, free in your browser on desktop, iPhone or Android. No upload, no calibre. Plus the manual method and fixes.";
@@ -12,7 +13,13 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: pageUrl },
-  openGraph: { title, description, url: pageUrl, type: "article" },
+  openGraph: {
+    title,
+    description,
+    url: pageUrl,
+    type: "article",
+    images: [{ url: heroImage, width: 1600, height: 1134, alt: "Adding a cover to an EPUB that has none in EpubCoverChanger.com" }],
+  },
 };
 
 const sources: BlogSource[] = [
@@ -76,7 +83,7 @@ const articleSchema = {
   description,
   url: pageUrl,
   inLanguage: "en",
-  image: `${siteUrl}/og-image.png`,
+  image: heroImage,
   datePublished: "2026-11-05",
   dateModified: "2026-11-05",
   author: { "@type": "Organization", name: "EpubCoverChanger.com", url: siteUrl },
@@ -132,7 +139,26 @@ export default function AddCoverToEpubPage() {
           is free, works on desktop and phone, and your book never leaves your
           browser.
         </p>
+        <p className="mt-3 text-sm leading-6 text-gray-600">
+          EpubCoverChanger.com is a free, browser-based tool for changing and
+          adding EPUB covers and editing EPUB metadata.
+        </p>
       </div>
+
+      <figure className="mt-10">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/blog/add-cover-to-epub-tool.jpg"
+          width={1600}
+          height={1134}
+          alt="EpubCoverChanger.com after opening an EPUB with no cover: the original cover box says no cover image was found, and the new cover is shown ready to confirm at 1600 x 2400 pixels"
+          className="h-auto w-full rounded-3xl border border-gray-200"
+        />
+        <figcaption className="mt-3 text-center text-sm text-gray-500">
+          A book with no cover (left) and the new cover ready to add (right).
+          Screenshot of our tool with a sample book.
+        </figcaption>
+      </figure>
 
       <section className={body}>
         <h2 className={h2}>How common are EPUBs without a cover?</h2>
@@ -213,6 +239,20 @@ export default function AddCoverToEpubPage() {
           Here is exactly what gets written, so you know nothing else is
           touched:
         </p>
+        <figure>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/blog/add-cover-to-epub-inside.svg"
+            width={960}
+            height={500}
+            loading="lazy"
+            alt="Inside an EPUB: adding a cover adds images/cover.jpg and two entries in content.opf, a manifest item with the cover-image property and a meta tag named cover, while mimetype stays first and chapters are unchanged"
+            className="h-auto w-full rounded-3xl border border-gray-200"
+          />
+          <figcaption className="mt-3 text-center text-sm text-gray-500">
+            One new image file and two new entries in the package file.
+          </figcaption>
+        </figure>
         <div className="overflow-x-auto rounded-2xl border border-gray-200">
           <table className="w-full min-w-[520px] text-left text-sm">
             <thead className="bg-gray-50 text-gray-500">

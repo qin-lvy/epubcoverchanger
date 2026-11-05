@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" role="img" aria-labelledby="t d">
+  <title id="t">What changes inside an EPUB when you add a cover</title>
+  <desc id="d">An EPUB is a ZIP archive. Adding a cover adds one image file, images/cover.jpg, and two lines in content.opf: a manifest item with the cover-image property and a meta tag named cover. The mimetype file stays first and uncompressed. Chapters and styles are unchanged.</desc>
+  <rect width="960" height="500" rx="28" fill="#F8FAFC"/>
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+    <text x="48" y="64" font-size="26" font-weight="700" fill="#0F172A">Inside the-quiet-harbor.epub (a ZIP file)</text>
+
+    <!-- File tree -->
+    <g font-size="20" fill="#334155">
+      <rect x="48" y="92" width="400" height="44" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+      <text x="68" y="121">mimetype</text>
+      <text x="428" y="121" text-anchor="end" font-size="16" fill="#64748B">first, uncompressed</text>
+
+      <rect x="48" y="146" width="400" height="44" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+      <text x="68" y="175">META-INF/container.xml</text>
+
+      <rect x="48" y="200" width="400" height="44" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="3"/>
+      <text x="68" y="229" font-weight="700" fill="#1E3A8A">OEBPS/content.opf</text>
+      <text x="428" y="229" text-anchor="end" font-size="16" font-weight="700" fill="#2563EB">cover lines added</text>
+
+      <rect x="48" y="254" width="400" height="44" rx="10" fill="#FFFBEB" stroke="#F59E0B" stroke-width="3"/>
+      <text x="68" y="283" font-weight="700" fill="#92400E">OEBPS/images/cover.jpg</text>
+      <text x="428" y="283" text-anchor="end" font-size="16" font-weight="700" fill="#B45309">new file</text>
+
+      <rect x="48" y="308" width="400" height="44" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+      <text x="68" y="337">OEBPS/ch1.xhtml, styles, fonts</text>
+      <text x="428" y="337" text-anchor="end" font-size="16" fill="#64748B">unchanged</text>
+    </g>
+
+    <!-- Connector -->
+    <path d="M448 222 C 490 222, 490 200, 520 200" fill="none" stroke="#2563EB" stroke-width="3"/>
+
+    <!-- OPF excerpt -->
+    <rect x="520" y="92" width="392" height="300" rx="16" fill="#0F172A"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#CBD5E1">
+      <text x="542" y="126" fill="#94A3B8">&lt;manifest&gt;</text>
+      <rect x="532" y="138" width="368" height="72" rx="8" fill="#1E3A8A"/>
+      <text x="548" y="162" fill="#FFFFFF">&lt;item id="ecc-cover-image"</text>
+      <text x="566" y="182" fill="#FFFFFF">href="images/cover.jpg"</text>
+      <text x="566" y="202" fill="#FDE68A">properties="cover-image"/&gt;</text>
+      <text x="542" y="236" fill="#94A3B8">  …chapters…</text>
+      <text x="542" y="260" fill="#94A3B8">&lt;/manifest&gt;</text>
+      <text x="542" y="296" fill="#94A3B8">&lt;metadata&gt; …</text>
+      <rect x="532" y="308" width="368" height="52" rx="8" fill="#1E3A8A"/>
+      <text x="548" y="330" fill="#FFFFFF">&lt;meta name="cover"</text>
+      <text x="566" y="350" fill="#FFFFFF">content="ecc-cover-image"/&gt;</text>
+      <text x="542" y="382" fill="#94A3B8">&lt;/metadata&gt;</text>
+    </g>
+
+    <!-- Legend -->
+    <g font-size="17" fill="#475569">
+      <text x="48" y="420"><tspan font-weight="700" fill="#1E3A8A">cover-image</tspan>: how EPUB 3 marks the cover (only one image may have it).</text>
+      <text x="48" y="452"><tspan font-weight="700" fill="#1E3A8A">meta name="cover"</tspan>: the older EPUB 2 convention many readers still use.</text>
+    </g>
+  </g>
+</svg>
