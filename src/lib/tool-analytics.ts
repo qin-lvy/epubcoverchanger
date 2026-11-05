@@ -20,7 +20,7 @@ export const METADATA_EVENTS = [
 
 export const TOOL_FAILURE_STAGES = ["epub_validation", "epub_parse", "cover_validation", "cover_prepare", "download"] as const;
 export const TOOL_FAILURE_REASONS = ["invalid_file_type", "file_too_large", "drm_protected", "parse_error", "image_load_error", "generation_error"] as const;
-export const TOOL_ALLOWED_PROPERTY_KEYS = ["workflow_id", "tool", "stage", "reason", "has_existing_cover", "image_type", "target_preset", "preparation_mode", "had_language", "changed_fields"] as const;
+export const TOOL_ALLOWED_PROPERTY_KEYS = ["workflow_id", "tool", "stage", "reason", "has_existing_cover", "image_type", "target_preset", "preparation_mode", "had_language", "changed_fields", "detected_format", "file_readable", "size_bucket", "os_family", "load_retried"] as const;
 
 type ToolFunnelEvent = (typeof TOOL_FUNNEL_EVENTS)[number];
 type ToolFailureStage = (typeof TOOL_FAILURE_STAGES)[number];
@@ -42,6 +42,12 @@ export type ToolEventProperties = {
   had_language?: boolean;
   /** Comma-separated field names, e.g. "title,language" — never the values. */
   changed_fields?: string;
+  /** Cover image diagnostics: format from the file header, never the image itself. */
+  detected_format?: string;
+  file_readable?: boolean;
+  size_bucket?: string;
+  os_family?: string;
+  load_retried?: boolean;
 };
 
 export function sanitizeToolProperties(properties: Record<string, unknown>): Record<string, string | number | boolean | null | undefined> {

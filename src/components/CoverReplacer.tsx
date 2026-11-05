@@ -29,6 +29,7 @@ import {
   type ImageDimensions,
 } from "@/lib/cover-sizes";
 import { captureToolEvent } from "@/lib/analytics";
+import { CoverLoadError, getOsFamily, loadCoverImage, sizeBucket } from "@/lib/cover-image-load";
 import { useLocale } from "@/lib/i18n";
 import {
   createWorkflowId,
@@ -302,8 +303,8 @@ export default function CoverReplacer() {
   );
 
   const handleCoverSelect = useCallback(
-    async (file: File) => {
-      if (!isValidCoverImage(file)) {
+    async (selectedFile: File) => {
+      if (!isValidCoverImage(selectedFile)) {
         if (workflowId) {
           captureToolEvent(TOOL_FAILURE_EVENT, {
             workflow_id: workflowId,
@@ -314,7 +315,7 @@ export default function CoverReplacer() {
         showToast(t("error.invalidImage"));
         return;
       }
-      if (isCoverTooLarge(file)) {
+      if (isCoverTooLarge(selectedFile)) {
         if (workflowId) {
           captureToolEvent(TOOL_FAILURE_EVENT, {
             workflow_id: workflowId,
@@ -327,12 +328,13 @@ export default function CoverReplacer() {
       }
 
       try {
-        const dimensions = await getImageDimensions(file);
+        const { file, dimensions, retried } = await loadCoverImage(selectedFile, getImageDimensions);
         if (workflowId) {
           captureToolEvent(TOOL_FUNNEL_EVENTS[2], {
             workflow_id: workflowId,
             image_type: file.type,
             target_preset: selectedSize.id,
+            ...(retried ? { load_retried: true } : {}),
           });
         }
         const previewUrl = URL.createObjectURL(file);
@@ -367,15 +369,30 @@ export default function CoverReplacer() {
 
         setPendingCoverFile(file);
         setShowCropEditor(true);
-      } catch {
+      } catch (error) {
+        const loadError = error instanceof CoverLoadError ? error : null;
         if (workflowId) {
           captureToolEvent(TOOL_FAILURE_EVENT, {
             workflow_id: workflowId,
             stage: "cover_prepare",
             reason: "image_load_error",
+            image_type: selectedFile.type,
+            // Errors thrown after the image loaded are not decode failures; keep them apart.
+            detected_format: loadError?.detectedFormat ?? "other_error",
+            file_readable: loadError?.fileReadable ?? true,
+            size_bucket: sizeBucket(selectedFile.size),
+            os_family: getOsFamily(window.navigator.userAgent, window.navigator.maxTouchPoints),
           });
         }
-        showToast(t("error.imageLoad"));
+        showToast(
+          t(
+            loadError?.detectedFormat === "heic"
+              ? "error.imageHeic"
+              : loadError && !loadError.fileReadable
+                ? "error.imageUnreadable"
+                : "error.imageLoad",
+          ),
+        );
       }
     },
     [afterImageUrl, showToast, selectedSize, t, uploadedCoverPreviewUrl, workflowId],

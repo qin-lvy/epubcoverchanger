@@ -26,7 +26,7 @@ const sections = [
   {
     title: "Anonymous usage statistics",
     paragraphs: [
-      "On epubcoverchanger.com we use PostHog, an analytics service based in the United States, to count page views and tool steps such as \"EPUB opened\", \"cover prepared\", \"EPUB saved\", or \"failed: file too large\". Each event includes the page path, a device category (desktop, mobile, or tablet), and a random ID.",
+      "On epubcoverchanger.com we use PostHog, an analytics service based in the United States, to count page views and tool steps such as \"EPUB opened\", \"cover prepared\", \"EPUB saved\", or \"failed: file too large\". Each event includes the page path, a device category (desktop, mobile, or tablet), and a random ID. When a cover image fails to load, the event also records the image format read from the file header, whether the file could be read, a rough size range, and whether the device runs iOS, Android, or something else, so we can fix the problem.",
       "That random ID is created in your browser and saved in its local storage so repeat visits can be counted. It is not linked to your name or email. We do not set advertising cookies. As with any web request, PostHog receives your IP address and browser details when an event is sent. You can clear the ID at any time by clearing this site's data in your browser.",
     ],
   },
