@@ -174,8 +174,9 @@ export default function AddCoverToEpubPage() {
             is a safe choice for any reader. See the size table below.
           </li>
           <li>
-            Choose <em>Fit</em> to keep the whole image, or <em>Fill</em> to
-            cover the page edge to edge.
+            Choose <strong>Fit entire image</strong> to keep the whole picture, or
+            <strong>Fill cover</strong> to cover the page edge to edge (the edges
+            may be cropped).
           </li>
           <li>
             Click <strong>Download Updated EPUB</strong>. The new file is saved
@@ -262,7 +263,8 @@ export default function AddCoverToEpubPage() {
           </table>
         </div>
         <p>
-          Chapters, styles, fonts and metadata stay as they were. The tool does
+          Chapters, styles, fonts and the title and author stay as they were;
+          only the book&apos;s last-modified date is updated. The tool does
           not insert an extra cover page at the start of the book. The cover
           appears as the book&apos;s thumbnail in your library. Some apps also
           show it as the first page, and others don&apos;t.
