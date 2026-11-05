@@ -56,6 +56,7 @@ export default function Footer() {
         { href: localizedRoutes.changeCover[locale], label: t("nav.blog"), isAnchor: false },
         { href: "/about", label: t("nav.about"), isAnchor: false },
         { href: "/pricing", label: t("nav.pricing"), isAnchor: false },
+        { href: "/contact", label: t("footer.contact"), isAnchor: false },
       ],
     },
   ];
