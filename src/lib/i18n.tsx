@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useMemo } from "react";
 import { usePathname } from "next/navigation";
+import { localizedSizeNote } from "@/lib/localized-size-notes";
 
 export type Locale = "en" | "pt" | "es";
 
@@ -304,15 +305,7 @@ export function getFaqMessages(locale: Locale) {
 
 export function getLocalizedSizeText(locale: Locale, size: { id: string; sourceLabel: string; note: string }) {
   const sourceKey = size.sourceLabel === "Recommended preset" ? "size.recommended" : size.sourceLabel === "Official ideal" ? "size.officialIdeal" : size.sourceLabel === "Official ratio" ? "size.officialRatio" : "size.original";
-  const noteKeys: Record<string, string> = {
-    "epub-standard": locale === "pt" ? "O EPUB não exige um único tamanho de capa." : "El EPUB no exige un único tamaño de portada.",
-    kindle: locale === "pt" ? "A Amazon recomenda 1600 x 2560 px para obter a melhor qualidade." : "Amazon recomienda 1600 x 2560 px para obtener la mejor calidad.",
-    "apple-books": locale === "pt" ? "A Apple exige uma capa de alta qualidade; este tamanho mantém o lado menor acima de 1400 px." : "Apple exige una portada de alta calidad; este preajuste mantiene el lado corto por encima de 1400 px.",
-    kobo: locale === "pt" ? "A Kobo não exige um tamanho específico; 3:4 é uma proporção adequada para suas telas." : "Kobo no exige un tamaño concreto; la proporción 3:4 se adapta bien a sus pantallas.",
-    "google-play": locale === "pt" ? "O Google define limites de arquivo e pixels, em vez de um único tamanho fixo." : "Google establece límites de archivo y píxeles, no un único tamaño fijo.",
-    original: locale === "pt" ? "Ideal quando sua imagem já é a capa final." : "Ideal cuando tu imagen ya es la portada final.",
-  };
-  return { sourceLabel: getMessage(locale, sourceKey), note: noteKeys[size.id] ?? size.note };
+  return { sourceLabel: getMessage(locale, sourceKey), note: localizedSizeNote(locale, size.id, size.note) };
 }
 
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
