@@ -13,5 +13,14 @@ export default function EnglishRootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <RootDocument lang="en">{children}</RootDocument>;
+  return (
+    <RootDocument lang="en">
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9657817590042201"
+        crossOrigin="anonymous"
+      />
+      {children}
+    </RootDocument>
+  );
 }
