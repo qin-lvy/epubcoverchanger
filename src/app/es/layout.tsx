@@ -6,5 +6,14 @@ export default function SpanishRootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <RootDocument lang="es">{children}</RootDocument>;
+  return (
+    <RootDocument lang="es">
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9657817590042201"
+        crossOrigin="anonymous"
+      />
+      {children}
+    </RootDocument>
+  );
 }
