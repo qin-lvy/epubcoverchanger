@@ -13,7 +13,7 @@ const sections = [
   {
     title: "The short version",
     paragraphs: [
-      "Your EPUB files and cover images are processed in your browser and are not uploaded to our servers. We use anonymous analytics to see which pages and tool steps work. We only receive personal information, such as an email address, if you choose to send it to us. We do not sell personal data, and the site has no ads or advertising trackers.",
+      "Your EPUB files and cover images are processed in your browser and are not uploaded to our servers. We use anonymous analytics to see which pages and tool steps work. We only receive personal information, such as an email address, if you choose to send it to us. We do not sell personal data. We use, or will use, Google AdSense to show ads.",
     ],
   },
   {
@@ -27,7 +27,37 @@ const sections = [
     title: "Anonymous usage statistics",
     paragraphs: [
       "On epubcoverchanger.com we use PostHog, an analytics service based in the United States, to count page views and tool steps such as \"EPUB opened\", \"cover prepared\", \"EPUB saved\", or \"failed: file too large\". Each event includes the page path, a device category (desktop, mobile, or tablet), and a random ID. When a cover image fails to load, the event also records the image format read from the file header, whether the file could be read, a rough size range, and whether the device runs iOS, Android, or something else, so we can fix the problem.",
-      "That random ID is created in your browser and saved in its local storage so repeat visits can be counted. It is not linked to your name or email. We do not set advertising cookies. As with any web request, PostHog receives your IP address and browser details when an event is sent. You can clear the ID at any time by clearing this site's data in your browser.",
+      "That random ID is created in your browser and saved in its local storage so repeat visits can be counted. It is not linked to your name or email. As with any web request, PostHog receives your IP address and browser details when an event is sent. You can clear the ID at any time by clearing this site's data in your browser.",
+    ],
+  },
+  {
+    title: "Advertising",
+    paragraphs: [
+      "We use, or will use, Google AdSense to show ads on this site.",
+      "Third-party vendors, including Google, use cookies to serve ads based on your prior visits to this website and other websites. Google's use of advertising cookies enables it and its partners to serve ads to you based on those visits.",
+      <>
+        You can opt out of personalized advertising by visiting{" "}
+        <a href="https://adssettings.google.com" className="text-primary hover:underline">
+          Google Ads Settings
+        </a>
+        . You can opt out of some third-party vendors&apos; cookies at{" "}
+        <a href="https://www.aboutads.info/choices" className="text-primary hover:underline">
+          www.aboutads.info/choices
+        </a>
+        , and if you are in the European Union, at{" "}
+        <a href="https://www.youronlinechoices.eu" className="text-primary hover:underline">
+          www.youronlinechoices.eu
+        </a>
+        . To learn more, read{" "}
+        <a
+          href="https://policies.google.com/technologies/partner-sites"
+          className="text-primary hover:underline"
+        >
+          How Google uses information from sites that use our services
+        </a>
+        .
+      </>,
+      "If you are in the European Economic Area or the United Kingdom, you will be asked for consent where the law requires it before advertising cookies are used.",
     ],
   },
   {
@@ -63,7 +93,7 @@ const sections = [
   {
     title: "Changes",
     paragraphs: [
-      "If we add accounts, payments, or advertising, we will update this policy before those features go live. The date at the top shows the latest version.",
+      "If we add accounts or payments, we will update this policy before those features go live. The date at the top shows the latest version.",
     ],
   },
 ];
@@ -77,14 +107,14 @@ export default function PrivacyPage() {
       <h1 className="mt-4 text-4xl font-bold tracking-tight text-gray-950">
         Privacy Policy
       </h1>
-      <p className="mt-4 text-sm text-gray-500">Last updated: November 5, 2026</p>
+      <p className="mt-4 text-sm text-gray-500">Last updated: November 12, 2026</p>
 
       <div className="mt-10 space-y-8 text-base leading-8 text-gray-700">
         {sections.map((section) => (
           <div key={section.title}>
             <h2 className="text-xl font-semibold text-gray-950">{section.title}</h2>
-            {section.paragraphs.map((paragraph) => (
-              <p key={paragraph} className="mt-3">{paragraph}</p>
+            {section.paragraphs.map((paragraph, index) => (
+              <p key={index} className="mt-3">{paragraph}</p>
             ))}
           </div>
         ))}
