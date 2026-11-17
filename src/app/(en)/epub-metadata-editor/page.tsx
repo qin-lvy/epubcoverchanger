@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Cite, SourceList, type BlogSource } from "@/components/BlogSources";
+import { AudiobookSiteLink, EditorProSection } from "@/components/EditorProSection";
 import MetadataEditor from "@/components/MetadataEditor";
 
 const pageUrl = "https://epubcoverchanger.com/epub-metadata-editor";
-const title = "EPUB Metadata Editor: Edit Title, Author & Language Free";
+const title = "EPUB Metadata Editor: Free Online EPUB Editor, No Upload";
 const description =
-  "Edit an EPUB's title, author, language and description free in your browser, no upload. Adds the missing language that can make Send to Kindle fail.";
+  "Free online EPUB editor: edit an EPUB's title, author, language and description in your browser. No upload, no signup. Fixes missing-language Kindle errors.";
 
 export const metadata: Metadata = {
   title,
@@ -67,6 +68,11 @@ const faqs = [
       "Not if it has DRM. Store-bought books are usually DRM-protected, and the editor only works with DRM-free EPUB files.",
   },
   {
+    question: "Can I edit the text of an EPUB here?",
+    answer:
+      "No. This EPUB editor changes the book's details (title, author, language, publisher and description), not its chapters. To edit the text itself, use a desktop EPUB editor such as Sigil or calibre.",
+  },
+  {
     question: "What language code should I use?",
     answer:
       "Use a short code for the language the book is written in: en for English, es for Spanish, pt-BR for Brazilian Portuguese, fr for French, de for German.",
@@ -111,9 +117,10 @@ export default function EpubMetadataEditorPage() {
             EPUB metadata editor
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-gray-600 md:text-lg">
-            Change an EPUB&apos;s title, author, language, publisher and
-            description for free. The book is edited in your browser and never
-            uploaded, on desktop, iPhone or Android.
+            A free online EPUB editor for your book&apos;s details: edit the
+            EPUB title, author, language, publisher and description. The book
+            is edited in your browser and never uploaded, with no signup, on
+            desktop, iPhone or Android.
           </p>
         </div>
         <div className="mt-8">
@@ -225,6 +232,30 @@ export default function EpubMetadataEditorPage() {
             .
           </p>
         </section>
+
+        <section className={body}>
+          <h2 className={h2}>Is this a full EPUB editor?</h2>
+          <p>
+            It edits the metadata of an EPUB, the details reading apps show in
+            your library. It does not change chapters, images or styling. That
+            keeps it simple: no install, no account, and your book never leaves
+            your device. If you need to edit the text of an EPUB, a desktop
+            editor such as Sigil or calibre is the better tool.
+          </p>
+          <p>
+            Need a new cover as well? The free{" "}
+            <Link href="/" className="text-primary hover:underline">
+              EPUB cover changer
+            </Link>{" "}
+            replaces or adds a cover the same way, right in your browser.
+          </p>
+          <p>
+            Like audiobooks too? Our sister site <AudiobookSiteLink /> converts
+            M4B audiobooks to MP3, free and in your browser.
+          </p>
+        </section>
+
+        <EditorProSection />
 
         <section className={body}>
           <h2 className={h2}>FAQ</h2>

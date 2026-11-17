@@ -25,6 +25,7 @@ export default function Header() {
   const homePath = locale === "pt" ? "/pt" : locale === "es" ? "/es" : "/";
   const navLinks = [
     { href: `${homePath}#how-it-works`, label: t("nav.howItWorks"), isAnchor: true },
+    ...(locale === "en" ? [{ href: "/epub-metadata-editor", label: "EPUB Editor", isAnchor: false }] : []),
     { href: localizedRoutes.changeCover[locale], label: t("nav.blog"), isAnchor: false },
     { href: "/pricing", label: t("nav.pricing"), isAnchor: false },
     { href: "/about", label: t("nav.about"), isAnchor: false },
