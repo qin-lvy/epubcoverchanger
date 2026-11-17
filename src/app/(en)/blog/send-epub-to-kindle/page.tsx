@@ -298,6 +298,15 @@ export default function SendEpubToKindlePage() {
             with DRM can&apos;t be sent this way.
           </li>
           <li>
+            <strong>Error E999, or the wrong title or author?</strong> A missing
+            language in the book&apos;s metadata is one known cause. Add it with
+            our free{" "}
+            <Link href="/epub-metadata-editor" className="text-primary hover:underline">
+              EPUB metadata editor
+            </Link>
+            , then send the file again.
+          </li>
+          <li>
             <strong>Rejected or garbled?</strong> See the causes and fixes in
             our{" "}
             <Link

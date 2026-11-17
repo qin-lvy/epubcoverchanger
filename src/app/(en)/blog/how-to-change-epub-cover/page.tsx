@@ -260,6 +260,14 @@ export default function HowToChangeEpubCoverPage() {
           . Kindle e-readers do not open EPUB
           files copied over USB; use Send to Kindle so the file gets converted.
         </p>
+        <p>
+          If the cover is fine but Kindle shows the wrong title or author, fix
+          the book&apos;s details with our free{" "}
+          <Link href="/epub-metadata-editor" className="text-primary hover:underline">
+            EPUB metadata editor
+          </Link>
+          .
+        </p>
       </section>
 
       <section className={body}>

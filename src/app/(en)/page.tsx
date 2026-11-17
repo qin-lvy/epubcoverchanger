@@ -1,4 +1,5 @@
 ﻿import type { Metadata } from "next";
+import Link from "next/link";
 import CoverReplacer from "@/components/CoverReplacer";
 import FAQ from "@/components/FAQ";
 import FeedbackSection from "@/components/FeedbackSection";
@@ -78,6 +79,15 @@ export default function Home() {
       <TrustBar />
       <StunningQuality />
       <HowItWorks />
+      <section className="px-6 pb-4">
+        <p className="mx-auto max-w-3xl rounded-2xl border border-gray-200 bg-gray-50 px-6 py-4 text-center text-base text-gray-700">
+          Need to fix the title, author or language too? Try our free{" "}
+          <Link href="/epub-metadata-editor" className="font-medium text-primary hover:underline">
+            EPUB editor for metadata
+          </Link>
+          , also right in your browser.
+        </p>
+      </section>
       <FAQ />
       <FeedbackSection />
     </>
