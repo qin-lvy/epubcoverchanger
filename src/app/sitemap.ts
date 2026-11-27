@@ -12,6 +12,7 @@ const routes = [
   { path: "/blog/send-epub-to-kindle", priority: 0.8, changeFrequency: "monthly" as const },
   { path: "/blog/add-cover-to-epub", priority: 0.8, changeFrequency: "monthly" as const },
   { path: "/blog/epub-cover-not-showing-on-kobo", priority: 0.8, changeFrequency: "monthly" as const },
+  { path: "/blog/kindle-cover-not-showing", priority: 0.8, changeFrequency: "monthly" as const },
   { path: "/pt/blog/trocar-capa-epub-kindle", priority: 0.7, changeFrequency: "monthly" as const },
   { path: "/pt/blog/tamanho-capa-epub", priority: 0.7, changeFrequency: "monthly" as const },
   { path: "/pt/blog/enviar-epub-para-kindle", priority: 0.7, changeFrequency: "monthly" as const },

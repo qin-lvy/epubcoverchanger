@@ -37,6 +37,7 @@ export default function Footer() {
           ? [
               { href: "/blog/add-cover-to-epub", label: "Add a cover to an EPUB", isAnchor: false },
               { href: "/blog/epub-cover-not-showing-on-kobo", label: "EPUB cover not showing on Kobo", isAnchor: false },
+              { href: "/blog/kindle-cover-not-showing", label: "Kindle cover not showing", isAnchor: false },
             ]
           : []),
       ],
